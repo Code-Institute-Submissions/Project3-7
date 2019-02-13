@@ -1,7 +1,7 @@
 import pymongo
 import os
 from flask import Flask
-
+app = Flask(__name__)
 #const set with capital laters with underscore seperating the words
 #MONGO_URI was set from the command line with the export command
 #mongodb://Admin:B00kjm@ds331735.mlab.com:31735/recipe_book
@@ -9,7 +9,7 @@ MONGODB_URI = os.getenv("MONGO_URI")
 DBS_NAME ="recipe_book"
 COLLECTION_NAME ="recipes"
 
-app = Flask(__name__)
+
 
 #Connect to mongo database
 def mongo_connect(url):
