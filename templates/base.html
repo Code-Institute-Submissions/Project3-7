@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href= "{{url_for('static', filename='css/style.css')}}" type="text/css" />
+
+</head>
+
+<body>
+      
+      
+  <nav>
+    <div class="nav-wrapper">
+      <a href="{{url_for('get_recipes')}}" class="brand-logo">
+        <img src="../static/images/FaviconLogo.png"></img></a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+          <li><a href="{{url_for('get_recipes')}}">Home</a></li>
+          <li><a href="{{url_for('search_recipes')}}">Search Recipes</a></li>
+          <li><a href="#.html">Add recipes</a></li>
+          <li><a href="#.html">Site Statistics</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="{{url_for('get_recipes')}}">Home</a></li>
+    <li><a href="#.html">Search Recipes</a></li>
+    <li><a href="#.html">Add Recipest</a></li>
+    <li><a href="#.html">Site Statistics</a></li>
+  </ul>
+    {% block content %}
+    
+    {% endblock %}
+
+    
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <script type="text/javascript">
+        M.AutoInit();
+        var instance = M.Tabs.getInstance(elem);
+        $(document).ready(function(){
+        $('.sidenav').sidenav();
+        });
+        
+        $(document).ready(function(){
+        $('.tooltipped').tooltip();
+        });
+        
+        $(document).ready(function(){
+        $('.tabs').tabs();
+        });
+        
+    </script>
+</body>
+    
+</html>

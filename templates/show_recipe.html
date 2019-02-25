@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+    
+    <div class= "row">
+        <div class="basic_detials col s12 m6">
+            <h1>{{ recipe.dish_name }}</h1>
+            <i class=" tiny material-icons">face</i><strong>Author:</strong> {{ recipe.user_name }}</br>
+            <i class="fas fa-globe"></i> <strong>Origin: </strong> {{ recipe.origin}}</br>
+            <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> {{ recipe.type }}</br>
+            <i class="far fa-clock"></i> <strong>Prep Time: </strong> {{ recipe.prep_time }}</br>
+            <i class="far fa-clock"></i> <strong>Cooking Time: </strong> {{ recipe.cook_time }}</br>
+            <i class=" tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
+            <i class="fas fa-heart"></i> <strong>Rating: </strong>{{ recipe.rating }} </br>
+            Allergens: <strong>{{ recipe.allergens|join(' ') }}</strong>
+         </div>
+         <div class="col s12 m6 center-align">
+             <img class="recipe_image responsive-img" src="{{recipe.url_image}}">
+        </div>
+    </div> 
+    <div class="divider"></div>
+        <div class= "row">
+            <div class="section col s12 m3">
+                <h5>Ingredients</h5>
+                {% for recipe in recipe.Ingredients %}
+                    {{ loop.index }}: {{ recipe.ingredient }} - {{ recipe.portion }}
+                    </br>
+                {% endfor %}
+             </div>
+             <div class="section col s12 m8 offset-m1">
+                
+                <h5>Steps</h5>
+                {% for recipe in recipe.method %}
+                    {{ loop.index }}: {{ recipe.step }}
+                    </br></br>
+                    
+                {% endfor %}
+             </div>
+                
+        
+        </div>
+        
+    
+</div>
+                  
+{% endblock %}

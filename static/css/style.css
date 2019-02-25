@@ -1,0 +1,42 @@
+body{
+    font-family: arial;
+    text-transform: capitalize;
+}
+
+.brand-logo span{
+    
+    color:blue;
+   
+}
+
+.title{
+   
+}
+
+.card-title{
+    text-transform: capitalize;
+}
+.back-card-jm{
+     text-transform: capitalize;
+     line-height: 2;
+}
+
+/*-------------------------------------------------------Display Recipe--------------------------------------*/
+.basic_detials{
+    text-transform: capitalize;
+    padding: 5px;
+    line-height: 1.6;
+}
+
+
+.recipe_image{
+    height: 300px;
+    width: 300px;
+    margin-top: 70px;
+   
+}
+
+.box{
+    border-color: blue;
+    border-style: double;
+}

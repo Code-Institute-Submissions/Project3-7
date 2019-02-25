@@ -19,7 +19,9 @@ favorite recipes for future use either by themself or another user on the websit
 
 **Existing and New fans.**
 
-* Users should be able to search recipes based on meal type..
+* Users should be able to search recipes based on recipe name.
+* Users should be able to search recipes based on counrty of orgin.
+* Users should be able to search recipes based on meal type.
 * Users should be able to search based on ingredents.
 * Users should be able to search, discounting any recipes with certain allgerns
 * Users should be able to add there own recipes
