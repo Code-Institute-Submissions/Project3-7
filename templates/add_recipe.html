@@ -1,79 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-<h1>Search</h1>
-<ul class="tabs">
-    <li class="tab col s4"><a class="active" href="#test-swipe-2">Search by Name</a></li>
-    <li class="tab col s4"><a href="#test-swipe-3">Search by Attributes</a></li>
-  </ul>
-  
-  <div id="test-swipe-2" class="col s12">
-   <form id="form"> <!-- action ="{{ url_for('find_recipe')}}" -->
-        <div class="input-field">
-          <input id="dish_name" name="dish_name" type="text" class="validate">
-          <label for="dish_name">Dish Name</label>
-        </div>
-        </br>
-          <button id="namesearch" class=" btn waves-effect waves-light" type="submit" >Submit  <!--form="form"-->
-            <i class="material-icons right">send</i>
-          </button>
-           
-   </form> 
-  <span id="result"></span>
-   </br>
-   </br>
-   
-   <section class="card-output">
-     <div class="col s12 m6 l4"">
-            <div class="card" >
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="">
-              </div>
-              <div class="card-content">
-                <span class="card-title  grey-text text-darken-4"></span>
-                <a id="link" href="#">Cooking Instructions</a><i class="activator material-icons right tooltipped" data-position="bottom" data-tooltip="Details">add</i>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
-                <div class="back-card-jm">
-                  <i class=" tiny material-icons">face</i><strong>Author:</strong> <span class ="author"></span></br>
-                  <i class="fas fa-globe"></i> <strong>Origin: </strong> <span class = "origin"></span></br>
-                  <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> <span class = "type"></span> </br>
-                  <i class="far fa-clock"></i> <strong>Prep Time: </strong> <span class = "prep-time"></span></br>
-                  <i class="far fa-clock"></i> <strong>Cooking Time: </strong> <span class = "cook-time"></span></br>
-                  <i class=" tiny material-icons">people</i> <strong>Services: </strong> <span class = "serves"></span>  </br>
-                  <i class="fas fa-heart"></i> <strong>Rating: </strong> <span class = "rating"></span> </br>
-                </div>
-              </div>
-           
+    <h3>Add Recipe</h3>
+</div>
+<form id="form" action="{{ url_for('find_recipe')}}" method="POST">
+    <div class="row">
+        </br></br>
+        <div class="box col s12 m8 offset-m2">
+            <div class="input-field">
+                <input id="dish_name" name="dish_name" type="text" class="validate">
+                <label for="dish_name">Dish Name</label>
             </div>
-          </div>
-         
-   </section>
-  </div>
-  
-
-  <div id="test-swipe-3" class="col s12">
-    <form id="form2" action ="{{ url_for('find_recipe')}}" method="POST">
-      <div class="row">
-        <div class="box col m3">
-          <div class="input-field">
-            <input id="author" type="text" class="validate">
-            <label for="author">Author</label>
-          </div>
-          </br>
-          <div class="input-field">
-              <select>
+            
+            <div class="input-field">
+                <input id="dish_image" type="text" class="validate">
+                <label for="dish_image">Image Url</label>
+            </div>
+            </br>
+            <div class="input-field">
+                <select>
                 <option value="" disabled selected>Choose your option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                <option value="1">Breakfast</option>
+                <option value="2">Lunch</option>
+                <option value="3">Dinner</option>
+                <option value="1">Desert</option>
+                <option value="2">starter</option>
               </select>
-              <label>Dish Type</label>
-          </div>
-          </br>
-          <div class="input-field" id="country" name="country">
-              <select>
+                <label>Dish Type</label>
+            </div>
+            </br>
+            <div class="input-field" id="country" name="country">
+                <select>
                 <option value="" disabled selected>Choose your option</option>
                 <option value="Afghanistan">Afghanistan</option>
                   <option value="Åland Islands">Åland Islands</option>
@@ -320,59 +277,128 @@
                   <option value="Zambia">Zambia</option>
                   <option value="Zimbabwe">Zimbabwe</option>
               </select>
-              <label>Country of Origin</label>
+                <label>Country of Origin</label>
             </div>
             </br>
-      </div>
-            <div class="box col m3 offset-m1">
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <div class="container">
+            <h5>Ingredients</h5>
+        </div>
+        <div class="row">
+            <div class="ingredientbox col s10 m5 offset-m2">
                 <div class="input-field">
-                  <input id="ingredient1" type="text" class="validate">
-                  <label for="ingredient1">Ingredient 1</label>
+                    <input id="ingredient1" type="text" class="validate">
+                    <label for="ingredient1">Ingredient 1</label>
                 </div>
                 </br>
                 <div class="input-field">
-                  <input id="ingredient2" type="text" class="validate">
-                  <label for="ingredient2">Ingredient 2</label>
+                    <input id="ingredient2" type="text" class="validate">
+                    <label for="ingredient2">Ingredient 2</label>
                 </div>
                 </br>
                 <div class="input-field">
-                  <input id="ingredient3" type="text" class="validate">
-                  <label for="ingredient3">Ingredient 3</label>
+                    <input id="ingredient3" type="text" class="validate">
+                    <label for="ingredient3">Ingredient 3</label>
                 </div>
                 </br>
-                 <div class="input-field">
-                  <input id="ingredient4" type="text" class="validate">
-                  <label for="ingredient4">Ingredient 4</label>
+                <div class="input-field">
+                    <input id="ingredient4" type="text" class="validate">
+                    <label for="ingredient4">Ingredient 4</label>
                 </div>
                 </br>
             </div>
-            <div class="box col m3 offset-m1">
+            <div class="portionbox col s2 m2 offset-m1">
                 <div class="input-field">
-                  <input id="allergen1" type="text" class="validate">
-                  <label for="allergen1">Allergen 1</label>
+                    <input id="portion1" type="text" class="validate">
+                    <label for="portiont1">Portion 1</label>
                 </div>
                 </br>
                 <div class="input-field">
-                  <input id="allergen2" type="text" class="validate">
-                  <label for="allergen2">Allergen 2</label>
+                    <input id="portion2" type="text" class="validate">
+                    <label for="portiont2">Portion 2</label>
                 </div>
                 </br>
                 <div class="input-field">
-                  <input id="allergen3" type="text" class="validate">
-                  <label for="allergen3">Allergen 3</label>
+                    <input id="portion3" type="text" class="validate">
+                    <label for="portiont3">Portion 3</label>
                 </div>
                 </br>
-                 <div class="input-field">
-                  <input id="allergen4" type="text" class="validate">
-                  <label for="allergen4">Allergen 4</label>
+                <div class="input-field">
+                    <input id="portion4" type="text" class="validate">
+                    <label for="portiont4">Portion 4</label>
                 </div>
                 </br>
             </div>
-        </div>        
-    </form> 
-</div>
-  <p><span id='display'></span></p>
-</div>
-
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m1 offset-m6">
+            <a id="addButton" class="btn-floating btn-small waves-effect waves-light red tooltipped" data-position="bottom" data-tooltip="Add Extra Ingredient"><i class="material-icons">add</i></a>
+        </div>
+    </div>
+    
+    <div class="divider"></div>
+    <div class="section">
+        <div class="container">
+            <h5>Allergens</h5>
+        </div>
+        <div class="row">
+            <div class="box col m8 offset-m2">
+                <div class="input-field">
+                    <input id="allergen1" type="text" class="validate">
+                    <label for="allergen1">Allergen 1</label>
+                </div>
+                </br>
+                <div class="input-field">
+                    <input id="allergen2" type="text" class="validate">
+                    <label for="allergen2">Allergen 2</label>
+                </div>
+                </br>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m1 offset-m6">
+            <a id="addAlergen" class="btn-floating btn-small waves-effect waves-light red tooltipped" data-position="bottom" data-tooltip="Add Extra Allergen"><i class="material-icons">add</i></a>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <div class="container">
+            <h5>Steps</h5>
+        </div>
+        <div class="row">
+            <div class="box col m8 offset-m2">
+                <div class="input-field">
+                    <input id="step1" type="text" class="validate">
+                    <label for="step1">Step 1</label>
+                </div>
+                </br>
+                <div class="input-field">
+                    <input id="step2" type="text" class="validate">
+                    <label for="step2">Step 2</label>
+                </div>
+                </br>
+                <div class="input-field">
+                    <input id="step3" type="text" class="validate">
+                    <label for="step3">Step 3</label>
+                </div>
+                </br>
+                <div class="input-field">
+                    <input id="step4" type="text" class="validate">
+                    <label for="step4">Step 4</label>
+                </div>
+                </br>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m1 offset-m6">
+            <a id="addAlergen" class="btn-floating btn-small waves-effect waves-light red tooltipped" data-position="bottom" data-tooltip="Add Extra Allergen"><i class="material-icons">add</i></a>
+        </div>
+    </div>
+</form>
 {% endblock %}

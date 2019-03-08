@@ -1,8 +1,10 @@
 import pymongo
 import os
+import json
 from flask import Flask, flash, jsonify ,render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+
 
 
 
@@ -25,6 +27,8 @@ mongo = PyMongo(app)
 def get_recipes():
     return render_template("recipes.html", recipes = mongo.db.recipes.find())
     
+
+    
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
     return render_template("show_recipe.html",
@@ -35,17 +39,33 @@ def show_recipe(recipe_id):
 def search_recipes():
     return render_template("search_recipes.html", recipes = mongo.db.recipes.find())
 
-@app.route('/find_recipe', methods=['POST'])
+@app.route('/get_name')
+def get_name():
+    name="john"
+    return name;
+
+@app.route('/add_recipe') 
+def add_recipe():
+    return render_template("add_recipe.html")
+
+@app.route('/find_recipe', methods=["POST","GET"])
 def find_recipe():
-        name = request.form['dish_name']
-        recipe = mongo.db.recipes.find_one({ 'dish_name': name })
-        if recipe is None:
-             flash('No Record found')
-             return redirect(url_for('search_recipes'))
-        return jsonify(recipe)
-       # return render_template("show_recipe.html", recipe = recipe)
-
-
+   name = request.form['dish_name']
+   recipe = mongo.db.recipes.find_one({ 'dish_name': name })
+   if recipe is None:
+        return jsonify({"error":"missing data"})
+   else:
+        array = json.dumps([{'dish': recipe['dish_name']}, 
+                       {'author': recipe['user_name']},
+                       {'origin': recipe['origin']},
+                       {'type': recipe['type']},
+                       {'prep_time': recipe['prep_time']},
+                       {'cook_time': recipe['cook_time']},
+                       {'serves': recipe['serves']},
+                       {'url_image': recipe['url_image']},
+                      {'recipe_id': str(recipe['_id'])}
+                       ])
+        return jsonify(array)
     
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
