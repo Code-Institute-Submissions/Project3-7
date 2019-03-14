@@ -1,0 +1,63 @@
+{% extends 'base.html' %} {% block content %}
+<div class="hero-image">
+    <div class="hero-text">
+        
+        <h1 style="font-size:50px">Foodie</h1>
+        <p>Cook Book</p>
+        <a href="{{url_for('login')}}" class="btn modal-trigger">Login</a>
+        </br>
+        <!-- Modal Register Trigger -->
+        <a class="waves-effect waves-light modal-trigger" href="#regModal">Register</a>
+    </div>
+</div>
+
+
+
+
+<!-- Modal Structure -->
+<div id="regModal" class="modal">
+    <div class="modal-content">
+        <h4>Register</h4>  
+       <!-- method="POST" action="/register/" -->
+        <form id="form-signin" >
+            <div class="row">
+                <div class="col s10 offset-s1">
+                    <div class="input-field">
+                        <label for="sign-in-username">User name*</label>
+                        <input name="username" type="text" class="validate" id="username" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="email">Email</label>
+                        <input name="useremail" type="email" class="validate" id="useremail">
+                    </div>
+                    <div class="input-field">
+                        <label for="sign-in-password">Password*</label>
+                        <input class="validate" name="user_password" type="password" id="user_password" required>
+                    </div>
+                    <div class="input-field">
+                        <label for="sign-in-password">Password again*</label>
+                        <input class="validate" name="user_password1" type="password" id="user_password1" required>
+                    </div>
+                </div>
+            </div>
+        <div class="center-align">
+            <button class="waves-effect waves-green btn">Register</button>
+            <a class="modal-close">close</a>
+        </div>
+        <div id="result_pass"></div>
+        </form>
+        
+    </div>
+    
+</div>
+
+
+<!-- Modal Structure -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        
+        
+    </div>
+    
+</div>
+{% endblock %}

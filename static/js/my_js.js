@@ -1,6 +1,69 @@
 $(document).ready(function() {
+    
+
+flashed_messages();
+
+
+
+/*
+Alerts modal
+*/
+
+function flashed_messages() {
+	let messages = parseInt($("#messages p").length);
+	if (messages) {
+		$("#alerts").slideDown(1500);
+		setTimeout(() => {
+			$("#alerts").slideUp(1500);
+		}, 7000);
+	}
+}
+ $('#form-signin').on('submit', function() {
+    
+    if($('#user_password').val() == $('#user_password1').val()){
+        var user = $('#username').val();
+        $.ajax({
+            type: 'POST',
+            data: {
+              user_name: $('#username').val(),
+              user_email: $('#useremail').val(),  
+              user_password: $('#user_password').val()
+            },
+            url: '/register'
+          })
+          .done(function(data) {
+              if (data.error) {
+                $('#result_pass').text(data.error)
+              }
+              else {
+                $('#result_pass').text(data.success)
+                $('#regModal').hide()
+                loadProfilePage(user);
+               /* let profileUrl ="/profile/<"+user +">";
+                window.location.replace(profileUrl);*/
+              }
+          });
+    } else {
+        alert("passwords do not match");
+    } 
+        event.preventDefault();
+});
+
+function loadProfilePage(user){
+    console.log(user);
+     $.ajax({
+            data: {
+              user_name: user
+            },
+            url: '/profile',
+            success:function(response)
+               {document.write(response)}
+          });
+}
+
+
   $('.card-output').hide();
-  $('form').on('submit', function() {
+  $('#name_search_form').on('submit', function() {
     $.ajax({
         type: 'POST',
         data: {
@@ -36,7 +99,7 @@ $(document).ready(function() {
   
   var ingredCounter = 4;
   $("#addIngredButton").click(function() {
-    if (ingredCounter > 10) {
+    if (ingredCounter >= 10) {
       alert("Only 10 textboxes allow");
       return false;
     }
@@ -58,7 +121,6 @@ $(document).ready(function() {
     portioninput.setAttribute("type", "text");
     portioninput.setAttribute("class", "validate");
   
-  
     var ingredlabel = document.createElement("label");
     var ingredtext = document.createTextNode("Ingredient " + ingredCounter);
     ingredlabel.setAttribute("for", "ingredient" + ingredCounter);
@@ -71,6 +133,7 @@ $(document).ready(function() {
   
     var ingredbr = document.createElement("br");
     var portionbr = document.createElement("br");
+    
     ingreddiv.appendChild(ingredinput);
     ingreddiv.appendChild(ingredlabel);
   
@@ -86,7 +149,67 @@ $(document).ready(function() {
     portionposition.appendChild(portionbr);
   
   });
+
+
+var allergenCounter = 2;                
+$("#addAlergenButton").click(function(){
   
+ if (allergenCounter >= 5) {
+   alert("Only 5 textboxes allow");
+   return false;
+ }
+
+ allergenCounter++;
+ var allergendiv = document.createElement("div");
+ allergendiv.classList.add('input-field');
+
+ var allergenInput = document.createElement("input");
+ allergenInput.setAttribute("id", "allergen" + allergenCounter);
+ allergenInput.setAttribute("type", "text");
+ allergenInput.setAttribute("class", "validate");
+
+ var allergenlabel = document.createElement("label");
+ var allergentext = document.createTextNode("Alergen " + allergenCounter);
+ allergenlabel.setAttribute("for", "allergen" + allergenCounter);
+ allergenlabel.appendChild(allergentext);
  
+var allergenbr = document.createElement("br");
+    allergendiv.appendChild(allergenInput);
+    allergendiv.appendChild(allergenlabel);
+    
+    var allergenposition = document.getElementsByClassName('allergenBox')[0];
+    allergenposition.appendChild(allergendiv);
+    allergenposition.appendChild(allergenbr);
+});
+
+var stepCounter = 4;   
+$("#addStepButton").click(function(){
+   if (stepCounter >= 10) {
+   alert("Only 10 textboxes allow");
+   return false;
+ }
+
+ stepCounter++;
+ var stepdiv = document.createElement("div");
+ stepdiv.classList.add('input-field');
+
+ var stepInput = document.createElement("input");
+ stepInput.setAttribute("id", "step" + stepCounter);
+ stepInput.setAttribute("type", "text");
+ stepInput.setAttribute("class", "validate");
+
+ var steplabel = document.createElement("label");
+ var steptext = document.createTextNode("Step " + stepCounter);
+ steplabel.setAttribute("for", "step" + stepCounter);
+ steplabel.appendChild(steptext);
+ 
+var stepbr = document.createElement("br");
+    stepdiv.appendChild(stepInput);
+    stepdiv.appendChild(steplabel);
+    
+    var stepposition = document.getElementsByClassName('stepBox')[0];
+    stepposition.appendChild(stepdiv);
+    stepposition.appendChild(stepbr);
+});
     
 });
