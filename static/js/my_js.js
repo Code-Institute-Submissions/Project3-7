@@ -38,7 +38,7 @@ function flashed_messages() {
               else {
                 $('#result_pass').text(data.success)
                 $('#regModal').hide()
-                loadProfilePage(user);
+                alert("You have been registered. You can now login");
                /* let profileUrl ="/profile/<"+user +">";
                 window.location.replace(profileUrl);*/
               }

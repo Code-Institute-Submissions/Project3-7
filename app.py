@@ -1,7 +1,7 @@
 import pymongo
 import os
 import json
-from flask import Flask, flash, jsonify ,render_template, redirect, request, url_for, session
+from flask import Flask, flash, jsonify ,render_template, redirect, request, url_for, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -54,6 +54,7 @@ def user_auth():
 		if check_password_hash(user_in_db['user_password'], form['user_password']):
 			# Log user in (add to session)
 			session['user'] = form['user_name']
+			g.golbalUser = form['user_name']
 			flash("You were logged in!")
 			print ("You were logged in!")
 			print(user_in_db['user_name'])
@@ -145,29 +146,29 @@ def add_recipe():
 def submit_recipe():
 	if request.method == 'POST':
 		form = request.form.to_dict()
+		print(form)
 		# If so try to find the user in db
 		recipe = recipes_collection.find_one({"dish_name" : form['dish_name']})
 		if recipe:
 			flash("Recipe name already taken");		
 			return redirect(url_for('add_recipe'))
-		else:				
-			# Hash password
-			author = session['user'];
-			#Create new user with hashed password
+		else:	
+		#	author = session['user'];
 			recipes_collection.insert_one(
 				{
-					'user_name': author,
+		#			'user_name': author,
 					'dish_name': form['dish_name'],
-					'type': form[''],
-					'url_image':form[''],
-					'prep_time':form[''],
-					'cook_time':form[''],
-					'serves':form[''],
-					'origin':form[''],
-					'ingredients':form[''],
-					'portion':form[''],
-					'method':form[''],
-					'allergens':form['']
+					'type': form['type'],
+					'prep_time':form['prep_time'],
+					'cook_time':form['cook_time'],
+					'serves':form['serves'],
+					'url_image':form['url_image'],
+					'origin':form['country'],
+		#			'ingredients':form[''],
+		#			'portion':form[''],
+				    'method': {'step1':form['step1'], 'step2':form['step2'], 'step3':form['step3'], 'step4':form['step4']}
+		
+		#			'allergens':form['']
 				}
 			)
 			# Check if user is actualy saved
