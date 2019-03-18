@@ -114,10 +114,8 @@ def logout():
 				
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-	print("profile call")
-	user = request.args.get('user_name');
-	return render_template("profile.html", myuser = mongo.db.users.find_one({"user_name": user}))
-
+	user = session['user'];
+	return render_template("profile.html", myrecipes = mongo.db.recipes.find({"user_name": user}))
 
 @app.route('/get_recipes')
 def get_recipes():
@@ -146,17 +144,69 @@ def add_recipe():
 def submit_recipe():
 	if request.method == 'POST':
 		form = request.form.to_dict()
-		print(form)
+		steps=[]
+		if form['step1'] !="":
+			steps.append({'step':form['step1']})
+			if form['step2'] !="":
+				steps.append({'step':form['step2']})
+				if form['step3'] !="":
+					steps.append({'step':form['step3']})
+					if form['step4'] !="":
+						steps.append({'step':form['step4']})
+						if "step5" in form:
+							steps.append({'step':form['step5']})
+							if "step6" in form:
+								steps.append({'step':form['step6']})
+								if "step7" in form:
+									steps.append({'step':form['step7']})
+									if "step8" in form:
+										steps.append({'step':form['step8']})
+								
+
+		allergens=[]
+		if form['allergen1'] !="":
+			allergens.append({'allergen':form['allergen1']})
+			if form['allergen2'] !="":
+				allergens.append({'allergen':form['allergen2']})
+				if "allergen3" in form:
+					allergens.append({'allergen':form['allergen3']})
+					if "allergen4" in form:
+						allergens.append({'allergen':form['allergen4']})
+						if "allergen5" in form:
+							allergens.append({'allergen':form['allergen5']})
+						
+		ingredients=[]
+		if form['ingredient1'] !="":
+			ingredients.append({'ingredient':form['ingredient1'],'portion':form['portion1']})
+			if form['ingredient2'] !="":
+				ingredients.append({'ingredient':form['ingredient2'],'portion':form['portion2']})
+				if form['ingredient3'] !="":
+					ingredients.append({'ingredient':form['ingredient3'],'portion':form['portion3']})
+					if form['ingredient4'] !="":
+						ingredients.append({'ingredient':form['ingredient4'],'portion':form['portion4']})
+						if "ingredient5" in form:
+							ingredients.append({'ingredient':form['ingredient5'],'portion':form['portion5']})
+							if "ingredient6" in form:
+								ingredients.append({'ingredient':form['ingredient6'],'portion':form['portion6']})
+								if "ingredient7" in form:
+									ingredients.append({'ingredient':form['ingredient7'],'portion':form['portion7']})
+									if "ingredient8" in form:
+										ingredients.append({'ingredient':form['ingredient8'],'portion':form['portion8']})
+										if "ingredient9" in form:
+											ingredients.append({'ingredient':form['ingredient9'],'portion':form['portion9']})
+											if "ingredient10" in form:
+												ingredients.append({'ingredient':form['ingredient10'],'portion':form['portion10']})
+	
 		# If so try to find the user in db
 		recipe = recipes_collection.find_one({"dish_name" : form['dish_name']})
 		if recipe:
 			flash("Recipe name already taken");		
 			return redirect(url_for('add_recipe'))
 		else:	
-		#	author = session['user'];
+			author = session['user'];
 			recipes_collection.insert_one(
 				{
-		#			'user_name': author,
+					'user_name': author,
 					'dish_name': form['dish_name'],
 					'type': form['type'],
 					'prep_time':form['prep_time'],
@@ -164,11 +214,9 @@ def submit_recipe():
 					'serves':form['serves'],
 					'url_image':form['url_image'],
 					'origin':form['country'],
-		#			'ingredients':form[''],
-		#			'portion':form[''],
-				    'method': {'step1':form['step1'], 'step2':form['step2'], 'step3':form['step3'], 'step4':form['step4']}
-		
-		#			'allergens':form['']
+					'ingredients':(ingredients),
+					'method': (steps),
+					'allergens': (allergens)
 				}
 			)
 			# Check if user is actualy saved

@@ -14,7 +14,12 @@
             <i class="far fa-clock"></i> <strong>Cooking Time: </strong> {{ recipe.cook_time }}</br>
             <i class=" tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
             <i class="fas fa-heart"></i> <strong>Rating: </strong>{{ recipe.rating }} </br>
-            Allergens: <strong>{{ recipe.allergens|join(' ') }}</strong>
+            Allergens: 
+                {% for recipe in recipe.allergens %}
+                <div class="pink lighten-3 chip">
+                    {{ recipe.allergen }} 
+                </div>
+                {% endfor %}
          </div>
          <div class="col s12 m6 center-align">
              <img class="recipe_image responsive-img" src="{{recipe.url_image}}">
@@ -24,7 +29,7 @@
         <div class= "row">
             <div class="section col s12 m3">
                 <h5>Ingredients</h5>
-                {% for recipe in recipe.Ingredients %}
+                {% for recipe in recipe.ingredients %}
                     {{ loop.index }}: {{ recipe.ingredient }} - {{ recipe.portion }}
                     </br>
                 {% endfor %}

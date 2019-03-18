@@ -18,6 +18,7 @@
 <body>
       
 {% if session.user %}
+user= session.user
   <nav>
     <div class="nav-wrapper">
       <a href="{{url_for('get_recipes')}}" class="brand-logo">
@@ -26,7 +27,8 @@
       <ul class="right hide-on-med-and-down">
         
           <li><a href="{{url_for('logout')}}">Logout</a></li>
-          <li><a href="{{url_for('get_recipes')}}">Home</a></li>
+          <li><a href="{{url_for('profile')}}">Home</a></li>
+          <li><a href="{{url_for('get_recipes')}}">All Recipes</a></li>
           <li><a href="{{url_for('search_recipes')}}">Search Recipes</a></li>
           <li><a href="{{url_for('add_recipe')}}">Add recipes</a></li>
           <li><a href="#.html">Site Statistics</a></li>

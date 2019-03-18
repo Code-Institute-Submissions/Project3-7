@@ -115,11 +115,13 @@ function loadProfilePage(user){
     ingredinput.setAttribute("id", "ingredient" + ingredCounter);
     ingredinput.setAttribute("type", "text");
     ingredinput.setAttribute("class", "validate");
+    ingredinput.setAttribute("name", "ingredient" + ingredCounter);
   
     var portioninput = document.createElement("input");
     portioninput.setAttribute("id", "portion" + ingredCounter);
     portioninput.setAttribute("type", "text");
     portioninput.setAttribute("class", "validate");
+    portioninput.setAttribute("name", "portion" + ingredCounter);
   
     var ingredlabel = document.createElement("label");
     var ingredtext = document.createTextNode("Ingredient " + ingredCounter);
@@ -167,9 +169,10 @@ $("#addAlergenButton").click(function(){
  allergenInput.setAttribute("id", "allergen" + allergenCounter);
  allergenInput.setAttribute("type", "text");
  allergenInput.setAttribute("class", "validate");
+ allergenInput.setAttribute("name", "allergen" + allergenCounter);
 
  var allergenlabel = document.createElement("label");
- var allergentext = document.createTextNode("Alergen " + allergenCounter);
+ var allergentext = document.createTextNode("Allergen " + allergenCounter);
  allergenlabel.setAttribute("for", "allergen" + allergenCounter);
  allergenlabel.appendChild(allergentext);
  
@@ -197,7 +200,8 @@ $("#addStepButton").click(function(){
  stepInput.setAttribute("id", "step" + stepCounter);
  stepInput.setAttribute("type", "text");
  stepInput.setAttribute("class", "validate");
-
+ stepInput.setAttribute("name","step" + stepCounter );
+ 
  var steplabel = document.createElement("label");
  var steptext = document.createTextNode("Step " + stepCounter);
  steplabel.setAttribute("for", "step" + stepCounter);
