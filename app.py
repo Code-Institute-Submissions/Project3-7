@@ -5,6 +5,7 @@ from flask import Flask, flash, jsonify ,render_template, redirect, request, url
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson.json_util import dumps
 
 
 
@@ -89,7 +90,6 @@ def register():
 			users_collection.insert_one(
 				{
 					'user_name': form['user_name'],
-					'user_email': form['user_email'],
 					'user_password': hash_pass
 				}
 			)
@@ -196,7 +196,9 @@ def submit_recipe():
 											ingredients.append({'ingredient':form['ingredient9'],'portion':form['portion9']})
 											if "ingredient10" in form:
 												ingredients.append({'ingredient':form['ingredient10'],'portion':form['portion10']})
-	
+		
+		likes=[]
+		likes.append({"rating": 0})
 		# If so try to find the user in db
 		recipe = recipes_collection.find_one({"dish_name" : form['dish_name']})
 		if recipe:
@@ -216,7 +218,8 @@ def submit_recipe():
 					'origin':form['country'],
 					'ingredients':(ingredients),
 					'method': (steps),
-					'allergens': (allergens)
+					'allergens': (allergens),
+					'likes':(likes)
 				}
 			)
 			# Check if user is actualy saved
@@ -233,12 +236,19 @@ def submit_recipe():
 
 @app.route('/find_recipe', methods=["POST","GET"])
 def find_recipe():
+   struct ={};
+   array=[];
    name = request.form['dish_name']
    recipe = mongo.db.recipes.find_one({ 'dish_name': name })
    if recipe is None:
         return jsonify({"error":"missing data"})
    else:
-        array = json.dumps([{'dish': recipe['dish_name']}, 
+       # array = list(recipe)
+        for record in recipe:
+        	array.append(record)
+        print(array)
+        return (struct)
+        '''json.dumps([{'dish': recipe['dish_name']}, 
                        {'author': recipe['user_name']},
                        {'origin': recipe['origin']},
                        {'type': recipe['type']},
@@ -248,8 +258,55 @@ def find_recipe():
                        {'url_image': recipe['url_image']},
                       {'recipe_id': str(recipe['_id'])}
                        ])
-        return jsonify(array)
-    
+                      return jsonify(array)'''
+        
+@app.route('/ingred_filter', methods=['POST'])
+def ingred_filter():
+	mylist=[]
+	ingred1 = request.form['ingred1']
+	ingred2 = request.form['ingred2']
+	print(ingred1, ingred2)
+	result = recipes_collection.find( {"ingredients.ingredient": ingred1})
+	if result is None:
+		return jsonify({"error":"missing data"})
+	else:
+		mylist=list(result)
+		print(dumps(mylist))
+		return (dumps(mylist))
+        
+@app.route('/filter_search', methods=['POST'])
+def filter_search():
+	dict ={}
+	listOrigin =[]
+	listType=[]
+	array=[]
+	myset= set([])
+	origin = request.form['origin']
+	type = request.form['type']
+	originResult = recipes_collection.find({"origin": origin})
+	typeResult = recipes_collection.find({"type": type})
+	for recipe in originResult:
+		listOrigin.append(recipe['dish_name'])
+	for recipe in typeResult:
+		listType.append(recipe['dish_name'])
+	print(listOrigin)
+	print(listType)
+	array = [value for value in listOrigin if value in listType]
+	print(array)
+#	test = recipes_collection.find("dish_name"{ $in: [list]})
+	#	myset = set(listType).intersection(listOrigin)
+	#	array = json.dumps(typeResult)
+	return ("array")
+	
+
+
+
+	
+@app.route('/statistics')
+def statistics():
+		
+	return
+	
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),

@@ -21,10 +21,8 @@ body{
 }
 
 .brand-logo span{
-    
     color:blue;
 }
-
 
 .hero-text {
   text-align: center;
@@ -69,6 +67,14 @@ body{
     line-height: 1.6;
 }
 
+.box{
+    border-right-style: ridge;
+    border-right-color: black;
+    border-left-style: ridge;
+    border-left-color: black;
+    padding-left: 50px;
+    padding-right: 50px; 
+}
 
 .recipe_image{
     height: 300px;
@@ -77,6 +83,18 @@ body{
    
 }
 
+/*.card-image{
+    height: 200px;
+    overflow: hidden;
+}*/
+
+.myButton{
+    background:url(/static/images/thumb.png) no-repeat;
+    cursor:pointer;
+    border:none;
+    width:200px;
+    height:200px;
+}
 
 .ingredborder{
      border: 2px solid red;

@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+
+you are on the search page {{ user }}
+
 <div class="container">
         <div class="row">
-          
-{% for recipe in recipes %}
+            <h4>
+                {% if not results %}
+                    you have found no results
+                {% else %}
+                    Here are the results of the search
+                {% endif %}
+            </h4>
+{% for recipe in results %}
           <div class="col s12 m6 l4">
-            <div class="card small">
+            <div class="card">
               <div class="card-image waves-effect waves-block waves-light">
                 <img class="activator" src="{{recipe.url_image}}">
               </div>
@@ -22,24 +31,16 @@
                   <i class="far fa-clock"></i> <strong>Prep Time: </strong> {{ recipe.prep_time }}</br>
                   <i class="far fa-clock"></i> <strong>Cooking Time: </strong> {{ recipe.cook_time }}</br>
                   <i class=" tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
-                  {% for record in recipe.likes %}
-                    {% if record.rating is defined %}
-                      <i class="fas fa-heart"></i> <strong>Likes: </strong>{{ record.rating }} </br>
-                    {% endif %} 
-                  {% endfor %}
-                  Allergens:
-                  {% for item in recipe.allergens %}
-                  <div class="pink lighten-3 chip">
-                     <strong>{{ item.allergen }}</strong>
-                  </div>
-                  {% endfor %}
+                  <i class="fas fa-heart"></i> <strong>Rating: </strong>{{ recipe.rating }} </br>
+                  Allergens: <strong>{{ recipe.allergens|join(' ') }}</strong>
                       
                 </div>
               </div>
             </div>
           </div>
 {% endfor %}
-    
-  </div>
 </div>
+</div>
+
+
 {% endblock %}
