@@ -3,9 +3,9 @@ import os
 import json
 from flask import Flask, flash, jsonify ,render_template, redirect, request, url_for, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from bson.json_util import dumps
+from flask_pymongo import PyMongo
 
 
 
@@ -45,7 +45,6 @@ def user_auth():
 	
 	form = request.form.to_dict()
 	user_in_db = users_collection.find_one({"user_name": form['user_name']})
-	print(user_in_db)
 	if 'user' in session:
 		flash("your in session allready");
 		return redirect(url_for('profile', myuser=user_in_db['user_name']))
@@ -98,7 +97,7 @@ def register():
 			if user_in_db:
 				# Log user in (add to session)
 				print("data loaded")
-				session['user'] = user_in_db['user_name']
+				# session['user'] = user_in_db['user_name']
 				return jsonify({"success":"Register Completed"});
 			else:
 				print("data not laoded")
@@ -146,56 +145,56 @@ def submit_recipe():
 		form = request.form.to_dict()
 		steps=[]
 		if form['step1'] !="":
-			steps.append({'step':form['step1']})
+			steps.append({'step':form['step1'].lower()})
 			if form['step2'] !="":
-				steps.append({'step':form['step2']})
+				steps.append({'step':form['step2'].lower()})
 				if form['step3'] !="":
-					steps.append({'step':form['step3']})
+					steps.append({'step':form['step3'].lower()})
 					if form['step4'] !="":
-						steps.append({'step':form['step4']})
+						steps.append({'step':form['step4'].lower()})
 						if "step5" in form:
-							steps.append({'step':form['step5']})
+							steps.append({'step':form['step5'].lower()})
 							if "step6" in form:
-								steps.append({'step':form['step6']})
+								steps.append({'step':form['step6'].lower()})
 								if "step7" in form:
-									steps.append({'step':form['step7']})
+									steps.append({'step':form['step7'].lower()})
 									if "step8" in form:
-										steps.append({'step':form['step8']})
+										steps.append({'step':form['step8'].lower()})
 								
 
 		allergens=[]
 		if form['allergen1'] !="":
-			allergens.append({'allergen':form['allergen1']})
+			allergens.append({'allergen':form['allergen1'].lower()})
 			if form['allergen2'] !="":
-				allergens.append({'allergen':form['allergen2']})
+				allergens.append({'allergen':form['allergen2'].lower()})
 				if "allergen3" in form:
-					allergens.append({'allergen':form['allergen3']})
+					allergens.append({'allergen':form['allergen3'].lower()})
 					if "allergen4" in form:
-						allergens.append({'allergen':form['allergen4']})
+						allergens.append({'allergen':form['allergen4'].lower()})
 						if "allergen5" in form:
-							allergens.append({'allergen':form['allergen5']})
+							allergens.append({'allergen':form['allergen5'].lower()})
 						
 		ingredients=[]
 		if form['ingredient1'] !="":
-			ingredients.append({'ingredient':form['ingredient1'],'portion':form['portion1']})
+			ingredients.append({'ingredient':form['ingredient1'].lower(),'portion':form['portion1'].lower()})
 			if form['ingredient2'] !="":
-				ingredients.append({'ingredient':form['ingredient2'],'portion':form['portion2']})
+				ingredients.append({'ingredient':form['ingredient2'].lower(),'portion':form['portion2'].lower()})
 				if form['ingredient3'] !="":
-					ingredients.append({'ingredient':form['ingredient3'],'portion':form['portion3']})
+					ingredients.append({'ingredient':form['ingredient3'].lower(),'portion':form['portion3'].lower()})
 					if form['ingredient4'] !="":
-						ingredients.append({'ingredient':form['ingredient4'],'portion':form['portion4']})
+						ingredients.append({'ingredient':form['ingredient4'].lower(),'portion':form['portion4'].lower()})
 						if "ingredient5" in form:
-							ingredients.append({'ingredient':form['ingredient5'],'portion':form['portion5']})
+							ingredients.append({'ingredient':form['ingredient5'].lower(),'portion':form['portion5'].lower()})
 							if "ingredient6" in form:
-								ingredients.append({'ingredient':form['ingredient6'],'portion':form['portion6']})
+								ingredients.append({'ingredient':form['ingredient6'].lower(),'portion':form['portion6'].lower()})
 								if "ingredient7" in form:
-									ingredients.append({'ingredient':form['ingredient7'],'portion':form['portion7']})
+									ingredients.append({'ingredient':form['ingredient7'].lower(),'portion':form['portion7'].lower()})
 									if "ingredient8" in form:
-										ingredients.append({'ingredient':form['ingredient8'],'portion':form['portion8']})
+										ingredients.append({'ingredient':form['ingredient8'].lower(),'portion':form['portion8'].lower()})
 										if "ingredient9" in form:
-											ingredients.append({'ingredient':form['ingredient9'],'portion':form['portion9']})
+											ingredients.append({'ingredient':form['ingredient9'].lower(),'portion':form['portion9'].lower()})
 											if "ingredient10" in form:
-												ingredients.append({'ingredient':form['ingredient10'],'portion':form['portion10']})
+												ingredients.append({'ingredient':form['ingredient10'].lower(),'portion':form['portion10'].lower()})
 		
 		likes=[]
 		likes.append({"rating": 0})
@@ -208,13 +207,13 @@ def submit_recipe():
 			author = session['user'];
 			recipes_collection.insert_one(
 				{
-					'user_name': author,
-					'dish_name': form['dish_name'],
+					'user_name': author.lower(),
+					'dish_name': form['dish_name'].lower(),
 					'type': form['type'],
-					'prep_time':form['prep_time'],
-					'cook_time':form['cook_time'],
-					'serves':form['serves'],
-					'url_image':form['url_image'],
+					'prep_time':form['prep_time'].lower(),
+					'cook_time':form['cook_time'].lower(),
+					'serves':form['serves'].lower(),
+					'url_image':form['url_image'].lower(),
 					'origin':form['country'],
 					'ingredients':(ingredients),
 					'method': (steps),
@@ -236,72 +235,59 @@ def submit_recipe():
 
 @app.route('/find_recipe', methods=["POST","GET"])
 def find_recipe():
-   struct ={};
-   array=[];
-   name = request.form['dish_name']
-   recipe = mongo.db.recipes.find_one({ 'dish_name': name })
-   if recipe is None:
-        return jsonify({"error":"missing data"})
-   else:
-       # array = list(recipe)
-        for record in recipe:
-        	array.append(record)
-        print(array)
-        return (struct)
-        '''json.dumps([{'dish': recipe['dish_name']}, 
-                       {'author': recipe['user_name']},
-                       {'origin': recipe['origin']},
-                       {'type': recipe['type']},
-                       {'prep_time': recipe['prep_time']},
-                       {'cook_time': recipe['cook_time']},
-                       {'serves': recipe['serves']},
-                       {'url_image': recipe['url_image']},
-                      {'recipe_id': str(recipe['_id'])}
-                       ])
-                      return jsonify(array)'''
+	name = request.form['dish_name'].lower()
+	recipe = recipes_collection.find_one({"dish_name": name})
+	if recipe is None:
+		print("no recipes")
+		return jsonify({"error":"No recipes found"})
+	else:
+		print("good")
+		myList = [];
+		myList.append(recipe)
+		return (dumps(myList))
+        
         
 @app.route('/ingred_filter', methods=['POST'])
 def ingred_filter():
 	mylist=[]
-	ingred1 = request.form['ingred1']
-	ingred2 = request.form['ingred2']
-	print(ingred1, ingred2)
-	result = recipes_collection.find( {"ingredients.ingredient": ingred1})
-	if result is None:
-		return jsonify({"error":"missing data"})
+	ingred1 = request.form['ingred1'].lower()
+	ingred2 = request.form['ingred2'].lower()
+	allergen1 = request.form['allergen1'].lower()
+	if allergen1 == "":
+		result = recipes_collection.find( 
+			{ "$and" : [ 
+				{"ingredients.ingredient": ingred1},{"ingredients.ingredient": ingred2} 
+			] 
+			} )
+	else: 
+		result = recipes_collection.find( 
+			{ "$and" : [ 
+				{"ingredients.ingredient": ingred1},{"ingredients.ingredient": ingred2},{"allergens.allergen": { "$ne": allergen1 }}  
+			] 
+			} )
+		
+	mylist=list(result)
+	if len(mylist) == 0:
+		return jsonify({"error":"No recipes found"})
 	else:
-		mylist=list(result)
-		print(dumps(mylist))
 		return (dumps(mylist))
         
 @app.route('/filter_search', methods=['POST'])
 def filter_search():
-	dict ={}
-	listOrigin =[]
-	listType=[]
-	array=[]
-	myset= set([])
-	origin = request.form['origin']
-	type = request.form['type']
-	originResult = recipes_collection.find({"origin": origin})
-	typeResult = recipes_collection.find({"type": type})
-	for recipe in originResult:
-		listOrigin.append(recipe['dish_name'])
-	for recipe in typeResult:
-		listType.append(recipe['dish_name'])
-	print(listOrigin)
-	print(listType)
-	array = [value for value in listOrigin if value in listType]
-	print(array)
-#	test = recipes_collection.find("dish_name"{ $in: [list]})
-	#	myset = set(listType).intersection(listOrigin)
-	#	array = json.dumps(typeResult)
-	return ("array")
-	
-
-
-
-	
+	origin = request.form['origin'].title()
+	print(origin)
+	type = request.form['type'].title()
+	result = recipes_collection.find({
+		"$and": [
+			{"origin": origin},{"type":type}
+			] 
+	})
+	mylist=list(result)
+	if len(mylist) == 0:
+		return jsonify({"error":"No recipes found"})
+	else:
+		return (dumps(mylist))
+		
 @app.route('/statistics')
 def statistics():
 		

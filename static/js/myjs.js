@@ -35,7 +35,10 @@ $('#form-signin').on('submit', function() {
               }
               else {
                 $('#result_pass').text(data.success)
-                $('#regModal').hide()
+                setTimeout(function()
+                { 
+                     $('#regModal').hide()
+                }, 10000);
                 alert("You have been registered. You can now login");
                /* let profileUrl ="/profile/<"+user +">";
                 window.location.replace(profileUrl);*/
@@ -47,97 +50,63 @@ $('#form-signin').on('submit', function() {
         event.preventDefault();
 });
 
+$('#name_search_form').on('submit', function() {
+    event.preventDefault();
+    $.ajax({
+        type: 'POST',
+        data: {
+          dish_name: $('#dish_name').val()
+        },
+        url: '/find_recipe'
+      })
+      .done(function(data) {
+        if (data.error) {
+            $('#result_message').text(data.error)
+            clearSearchReults();
+            }
+            else {
+                $('#result_message').text("Here is the result of your search")
+                clearSearchReults();
+                var array = JSON.parse(data);
+                console.log(array);
+                createHTMLSearch(array);
+                }
+          });
+    });
+    
+});
+
+
 $('#ingredientForm').on('submit', function () {
     event.preventDefault();
-    var txt;
-    var i;
-    var len;
     var ingred1 = $('#ingredient1').val()
     var ingred2 = $('#ingredient2').val()
+    var allergen1 = $('#allergen1').val()
      $.ajax({
             type: 'POST',
             data: {
               ingred1: ingred1,
-              ingred2: ingred2
+              ingred2: ingred2,
+              allergen1: allergen1
             },
             url: '/ingred_filter'
           })
           .done(function(data) {
                if (data.error) {
-                $('result').text(data.error)
-                $('.card').hide(); }
+                $('#result_message').text(data.error)
+                clearSearchReults();
+                }
                else {
-                    $('.card').show(); 
+                    $('#result_message').text("Here is the result of your search")
+                    clearSearchReults();
                     var array = JSON.parse(data);
                     console.log(array);
-                    len = array.length;
-                    for (i=0; i<len; i++) {
-                        var rowdiv = document.createElement("div");
-                        rowdiv.classList.add('row');
-                        var coldiv = document.createElement("div");
-                        coldiv.classList.add('col','s12','m3','l3');
-                        var carddiv = document.createElement("div");
-                        carddiv.classList.add('card');
-                        var imagediv = document.createElement("div");
-                        imagediv.classList.add('card-image','waves-effect','waves-block','waves-light');
-                        var imagetag = document.createElement('img');
-                        imagetag.classList.add('activator');
-                        imagetag.setAttribute("src", array[i].url_image);
-                        var contentdiv = document.createElement('div');
-                        contentdiv.classList.add('card-content');
-                        var cardspan = document.createElement('span');
-                        cardspan.classList.add('card-title','grey-text','text-darken-4');
-                        cardspan.innerHTML = array[i].dish_name;
-                        var acard =document.createElement('a');
-                        acard.classList.add('link');
-                        acard.innerHTML= "Cooking instructions";
-                        acard.setAttribute("href","/show_recipe"+ array[i]._id);
-                        var icard =document.createElement('i');
-                        icard.classList.add('activator', 'material-icons', 'right','tooltipped');
-                        var cardposition = document.getElementsByClassName('result')[0]; 
-                        cardposition.appendChild(rowdiv);
-                        rowdiv.appendChild(coldiv);
-                        coldiv.appendChild(carddiv);
-                        carddiv.appendChild(imagediv);
-                        imagediv.appendChild(imagetag);
-                        carddiv.appendChild(contentdiv);
-                        contentdiv.appendChild(cardspan);
-                        contentdiv.appendChild(acard);
-                        contentdiv.appendChild(icard);
+                    createHTMLSearch(array);
                     }
-               }
           });
-    });
 });
 
-/*
-<section class="card-output"> done
-      <div class="col s12 m6 l4"> done
-        <div class="card" > done
-          <div class="card-image waves-effect waves-block waves-light"> done
-            <img class="activator" src=""> no
-          </div>
-        <div class="card-content">done
-            <span class="card-title grey-text text-darken-4"></span> no
-            <a id="link" href="#">Cooking Instructions</a>no
-            <i class="activator material-icons right tooltipped" data-position="bottom" data-tooltip="Details">add</i>no
-        </div>
-        
-        
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">yesy<i class="material-icons right">close</i></span>
-          <div class="back-card-jm">
-            <i class=" tiny material-icons">face</i><strong>Author:</strong> <span class ="author"></span></br>
-            <i class="fas fa-globe"></i> <strong>Origin: </strong> <span class = "origin"></span></br>
-            <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> <span class = "type"></span> </br>
-            <i class="far fa-clock"></i> <strong>Prep Time: </strong> <span class = "prep-time"></span></br>
-            <i class="far fa-clock"></i> <strong>Cooking Time: </strong> <span class = "cook-time"></span></br>
-            <i class=" tiny material-icons">people</i> <strong>Services: </strong> <span class = "serves"></span>  </br>
-            <i class="fas fa-heart"></i> <strong>Rating: </strong> <span class = "rating"></span> </br>
-          </div>
-        </div>
-      </div>
-    </section> */
+
 
 
 $('#origintype_search_form').on('submit', function () {
@@ -153,92 +122,177 @@ $('#origintype_search_form').on('submit', function () {
             url: '/filter_search'
           })
           .done(function(data) {
+              if(data.error) {
+                  $('#result_message').text(data.error)
+                  clearSearchReults();
+              } else
+              { $('#result_message').text("Here is the result of your search")
               var array = JSON.parse(data);
               console.log(array);
-              $('#attresult').text("this dish " + array[0]+ " has been Found")
+              clearSearchReults();
+              createHTMLSearch(array);
+              }
           });
 });
-
-
-function loadProfilePage(user){
-    console.log(user);
-     $.ajax({
-            data: {
-              user_name: user
-            },
-            url: '/profile',
-            success:function(response)
-               {document.write(response)}
-          });
-}
-
 
 $('.card-output').hide();
   
-$('#name_search_form').on('submit', function() {
-    $.ajax({
-        type: 'POST',
-        data: {
-          dish_name: $('#dish_name').val()
-        },
-        url: '/find_recipe'
-      })
-      .done(function(data) {
-        if (data.error) {
-          $('#result').text(data.error)
-          $('.card-output').hide();
+
+
+function clearSearchReults(){
+var myNode = document.getElementsByClassName("searchresult")[0];
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
+
+function createHTMLSearch(array){
+    var len = array.length;
+    var j=0;
+    for (var i=0; i<len; i++) {
+        if(j==0 || j/3==0){
+            var rowdiv = document.createElement("div");
+            rowdiv.classList.add('row');
         }
-        else {
-          var array = JSON.parse(data);
-          $('#result').text("this dish " + array[0].dish + " has been Found")
-          $('.card-output').show();
-    /*      $('.card-title').text(array[0].dish)
-          $('.author').text(array[1].author)
-          $('.origin').text(array[2].origin)
-          $('.type').text(array[3].type)
-          $('.prep-time').text(array[4].prep_time)
-          $('.cook-time').text(array[5].cook_time)
-          $('.serves').text(array[6].serves)
-          $('.activator').attr('src', array[7].url_image)
-          let recipe_id = array[8].recipe_id;
-          let url = "/show_recipe/" + recipe_id;
-          $('#link').attr('href', url); */
-            console.log(array);
-            var i;
-            var len = array.length;
-            
-                var coldiv = document.createElement("div");
-                coldiv.classList.add('col','s12','m6','l4');
-                var carddiv = document.createElement("div");
-                carddiv.classList.add('card');
-                var imagediv = document.createElement("div");
-                imagediv.classList.add('card-image','waves-effect','waves-block','waves-light');
-                var imagetag = document.createElement('img');
-                imagetag.classList.add('activator');
-                var contentdiv = document.createElement('div');
-                contentdiv.classList.add('card-content');
-                var cardspan = document.createElement('span');
-                cardspan.classList.add('card-title','grey-text','text-darken-4');
-                console.log(array[i].dish_name);
-              /*  cardspan.innerHTML = array('dish_name');*/
-                var acard =document.createElement('a');
-                acard.classList.add('link');
-                var icard =document.createElement('i');
-                icard.classList.add('activator', 'material-icons', 'right','tooltipped');
-                var cardposition = document.getElementsByClassName('result')[0];
-                cardposition.appendChild(coldiv);
-                coldiv.appendChild(carddiv);
-                carddiv.appendChild(imagediv);
-                imagediv.appendChild(imagetag);
-                cardposition.appendChild(contentdiv);
-                contentdiv.appendChild(cardspan);
-                contentdiv.appendChild(acard);
-                contentdiv.appendChild(icard);
+        j++;
+        var coldiv = document.createElement("div");
+        coldiv.classList.add('col','s12','m6','l4');
+        var carddiv = document.createElement("div");
+        carddiv.classList.add('card','small');
+        var imagediv = document.createElement("div");
+        imagediv.classList.add('card-image','waves-effect','waves-block','waves-light');
+        var imagetag = document.createElement('img');
+        imagetag.classList.add('activator');
+        imagetag.setAttribute("src", array[i].url_image);
+        var contentdiv = document.createElement('div');
+        contentdiv.classList.add('card-content');
+        var cardspan = document.createElement('span');
+        cardspan.classList.add('card-title','grey-text','text-darken-4');
+        cardspan.innerHTML = array[i].dish_name;
+        var acard =document.createElement('a');
+        acard.classList.add('link');
+        acard.innerHTML= "Cooking instructions";
+        acard.setAttribute("href","/show_recipe"+ array[i]._id);
+        var icard =document.createElement('i');
+        icard.classList.add('activator', 'material-icons', 'right','tooltipped');
+        icard.setAttribute('data-position','bottom');
+        icard.setAttribute('data-tooltip','Details');
+        icard.innerHTML = "add";
+        var cardposition = document.getElementsByClassName('searchresult')[0]; 
+        cardposition.appendChild(rowdiv);
+        rowdiv.appendChild(coldiv);
+        coldiv.appendChild(carddiv);
+        carddiv.appendChild(imagediv);
+        imagediv.appendChild(imagetag);
+        carddiv.appendChild(contentdiv);
+        contentdiv.appendChild(cardspan);
+        contentdiv.appendChild(acard);
+        contentdiv.appendChild(icard);
         
-        }
-    });
-    event.preventDefault();
-});
+        var revealdiv = document.createElement("div");
+        revealdiv.classList.add("card-reveal");
+        carddiv.appendChild(revealdiv);
+        
+        var cardspanback = document.createElement('span');
+        cardspanback.classList.add('card-title','grey-text','text-darken-4');
+        cardspanback.innerHTML = array[i].dish_name;
+        revealdiv.appendChild(cardspanback);
+        var iclose = document.createElement("i");
+        iclose.classList.add("material-icons","right");
+        iclose.innerHTML ="close";
+        cardspanback.appendChild(iclose);
+        
+        var backcarddiv = document.createElement('div');
+        backcarddiv.classList.add("back-card-jm");
+        revealdiv.appendChild(backcarddiv);
+        
+        var strongface= document.createElement("strong");
+        strongface.innerHTML = "Author: "+ array[i].user_name ;
+        var strongorigin= document.createElement("strong");
+        strongorigin.innerHTML= "Origin: "+ array[i].origin;
+        var strongtype= document.createElement("strong");
+        strongtype.innerHTML="type: "+ array[i].type;
+        var strongprep= document.createElement("strong");
+        strongprep.innerHTML="Prep Time: "+ array[i].prep_time;
+        var strongcook= document.createElement("strong");
+        strongcook.innerHTML= "Cook Time: "+ array[i].cook_time;
+        var strongserves= document.createElement("strong");
+        strongserves.innerHTML= "Serves: "+ array[i].serves;
+        var strongrating= document.createElement("strong");
+        strongrating.innerHTML="Rating: "+ array[i].likes;
+        var iface =document.createElement("i");
+        iface.classList.add("tiny", "material-icons");
+        iface.innerHTML = "face";
+        var iorigin =document.createElement("i");
+        iorigin.classList.add("fas","fa-globe");
+     
+        var itype =document.createElement("i");
+        itype.classList.add("fas", "fa-pizza-slice");
+       
+        var iprep =document.createElement("i");
+        iprep.classList.add('far', 'fa-clock');
+        
+        var icook =document.createElement("i");
+        icook.classList.add('far', 'fa-clock');
+        
+        var iserves =document.createElement("i");
+        iserves.classList.add("tiny", "material-icons");
+        iserves.innerHTML= "people";
+        
+        var irating =document.createElement("i");
+        irating.classList.add("fas", "fa-heart");
+        
+        
+        var mybr = document.createElement('br');
+        strongface.appendChild(mybr);
+        strongorigin.appendChild(mybr.cloneNode());
+        strongtype.appendChild(mybr.cloneNode());
+        strongprep.appendChild(mybr.cloneNode());
+        strongcook.appendChild(mybr.cloneNode());
+        strongserves.appendChild(mybr.cloneNode());
+        strongrating.appendChild(mybr.cloneNode());
+        
+        backcarddiv.appendChild(iface);
+        backcarddiv.appendChild(strongface);
+        backcarddiv.appendChild(iorigin);
+        backcarddiv.appendChild(strongorigin);
+        backcarddiv.appendChild(itype);
+        backcarddiv.appendChild(strongtype);
+        backcarddiv.appendChild(iprep);
+        backcarddiv.appendChild(strongprep);
+        backcarddiv.appendChild(icook);
+        backcarddiv.appendChild(strongcook);
+        backcarddiv.appendChild(iserves);
+        backcarddiv.appendChild(strongserves);
+        backcarddiv.appendChild(irating);
+        backcarddiv.appendChild(strongrating);
+       
+        iorigin.appendChild(strongorigin);
+        itype.appendChild(strongtype);
+        iprep.appendChild(strongprep);
+        icook.appendChild(strongcook);
+        iserves.appendChild(strongserves);
+        irating.appendChild(strongrating);
+        
+    }
+}
+
+/*
+
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">yesy<i class="material-icons right">close</i></span>
+          <div class="back-card-jm">
+            <i class=" tiny material-icons">face</i><strong>Author:</strong> <span class ="author"></span></br>
+            <i class="fas fa-globe"></i> <strong>Origin: </strong> <span class = "origin"></span></br>
+            <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> <span class = "type"></span> </br>
+            <i class="far fa-clock"></i> <strong>Prep Time: </strong> <span class = "prep-time"></span></br>
+            <i class="far fa-clock"></i> <strong>Cooking Time: </strong> <span class = "cook-time"></span></br>
+            <i class=" tiny material-icons">people</i> <strong>Services: </strong> <span class = "serves"></span>  </br>
+            <i class="fas fa-heart"></i> <strong>Rating: </strong> <span class = "rating"></span> </br>
+          </div>
+        </div>
+      </div>
+    </section> */
 $("#likesButton").click(function() {
     
 });

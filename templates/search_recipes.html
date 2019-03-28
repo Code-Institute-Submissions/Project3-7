@@ -7,7 +7,7 @@
   <div class="col m2 offset-m1">
     <form id="name_search_form"> 
       <div class="input-field">
-        <input id="dish_name" name="dish_name" type="text" class="validate">
+        <input id="dish_name" name="dish_name" type="text" class="validate" required>
         <label for="dish_name">Dish Name</label>
       </div>
       </br>
@@ -24,19 +24,19 @@
     
     <form id="ingredientForm" name="ingredientForm">
       <div class="input-field">
-        <input id="ingredient1" name="ingredient1" type="text" class="validate">
+        <input id="ingredient1" name="ingredient1" type="text" class="validate" required>
         <label for="ingredient1">Ingredient 1</label>
       </div>
       </br>
       <div class="input-field">
-        <input id="ingredient2" name="ingredient2" type="text" class="validate">
+        <input id="ingredient2" name="ingredient2" type="text" class="validate" required>
         <label for="ingredient2">Ingredient 2</label>
       </div>
       </br>
       </br>
       <div class="input-field">
-        <input id="allergen2" type="text" class="validate">
-        <label for="allergen2">Allergen 2</label>
+        <input id="allergen1" name= "allergen1" type="text" class="validate">
+        <label for="allergen1">Allergen 2</label>
         </div>
       </br>
       <button id="filteringredients" class=" btn waves-effect waves-light" type="submit" >Submit  <!--form="form"-->
@@ -322,7 +322,8 @@
   
 </div>
 <div class="divider"></div>
-<span class="result"></span>
+<div id="result_message"></div>
+<div class="searchresult"></div>
     </br>
     </br>
  <!--   <section class="card-output">
