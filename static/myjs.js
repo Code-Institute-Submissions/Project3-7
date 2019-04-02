@@ -50,6 +50,27 @@ $('#form-signin').on('submit', function() {
         event.preventDefault();
 });
 
+
+$("#likesButton").click(function() {
+    var title = document.getElementById("show_title");
+    var this_dish_name = title.firstChild.nodeValue;
+    $.ajax({
+            type: 'POST',
+            data: {
+              dish_name: this_dish_name
+            },
+            url: '/likes'
+          })
+          .done(function(data) {
+              if(data.success) {
+                  alert("success"+data.success);
+              } else if(data.error)
+              { 
+                alert("error"+data.error);
+              }
+          });
+});
+
 $('#name_search_form').on('submit', function() {
     event.preventDefault();
     $.ajax({
@@ -277,29 +298,12 @@ function createHTMLSearch(array){
     }
 }
 
-/*
 
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">yesy<i class="material-icons right">close</i></span>
-          <div class="back-card-jm">
-            <i class=" tiny material-icons">face</i><strong>Author:</strong> <span class ="author"></span></br>
-            <i class="fas fa-globe"></i> <strong>Origin: </strong> <span class = "origin"></span></br>
-            <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> <span class = "type"></span> </br>
-            <i class="far fa-clock"></i> <strong>Prep Time: </strong> <span class = "prep-time"></span></br>
-            <i class="far fa-clock"></i> <strong>Cooking Time: </strong> <span class = "cook-time"></span></br>
-            <i class=" tiny material-icons">people</i> <strong>Services: </strong> <span class = "serves"></span>  </br>
-            <i class="fas fa-heart"></i> <strong>Rating: </strong> <span class = "rating"></span> </br>
-          </div>
-        </div>
-      </div>
-    </section> */
-$("#likesButton").click(function() {
-    
-});
+
 
 var ingredCounter = 4;
 $("#addIngredButton").click(function() {
-    if (ingredCounter >= 10) {
+    if (ingredCounter > 10) {
       alert("Only 10 textboxes allow");
       return false;
     }
@@ -350,12 +354,69 @@ $("#addIngredButton").click(function() {
     portionposition.appendChild(portionbr);
 });
 
+var updateIngredCounter = 10;
+$("#updateAddIngredButton").click(function() {
+    if (updateIngredCounter > 12) {
+      alert("Only 2 extra textboxes allowed for an");
+      return false;
+    }
+    updateIngredCounter++;
+    var ingreddiv = document.createElement("div");
+    ingreddiv.classList.add('input-field');
+  
+    var portiondiv = document.createElement("div");
+    portiondiv.classList.add('input-field');
+  
+    var ingredinput = document.createElement("input");
+    ingredinput.setAttribute("id", "ingredient" + updateIngredCounter);
+    ingredinput.setAttribute("type", "text");
+    ingredinput.setAttribute("class", "validate");
+    ingredinput.setAttribute("name", "ingredient" + updateIngredCounter);
+  
+    var portioninput = document.createElement("input");
+    portioninput.setAttribute("id", "portion" + updateIngredCounter);
+    portioninput.setAttribute("type", "text");
+    portioninput.setAttribute("class", "validate");
+    portioninput.setAttribute("name", "portion" + updateIngredCounter);
+    
+    var ingredlabel = document.createElement("label");
+    var ingredtext = document.createTextNode("Extra Ingredient");
+    ingredlabel.setAttribute("for", "ingredient" + updateIngredCounter);
+    ingredlabel.appendChild(ingredtext);
+  
+    var portionlabel = document.createElement("label");
+    var portiontext = document.createTextNode("Exra Portion ");
+    portionlabel.setAttribute("for","Portion" + ingredCounter);
+    portionlabel.appendChild(portiontext);
+  
+    var ingredbr = document.createElement("br");
+    var portionbr = document.createElement("br");
+    
+    ingreddiv.appendChild(ingredinput);
+    ingreddiv.appendChild(ingredlabel);
+  
+    portiondiv.appendChild(portioninput);
+    portiondiv.appendChild(portionlabel);
+  
+    var ingredposition = document.getElementsByClassName('ingredientbox')[0];
+    ingredposition.appendChild(ingreddiv);
+    ingredposition.appendChild(ingredbr);
+  
+    var portionposition = document.getElementsByClassName('portionbox')[0];
+    portionposition.appendChild(portiondiv);
+    portionposition.appendChild(portionbr);
+});
+
+
+
+
+
 
 
 var allergenCounter = 2;                
 $("#addAlergenButton").click(function(){
   
- if (allergenCounter >= 5) {
+ if (allergenCounter > 5) {
    alert("Only 5 textboxes allow");
    return false;
  }
@@ -384,9 +445,43 @@ var allergenbr = document.createElement("br");
     allergenposition.appendChild(allergenbr);
 });
 
+
+
+var updateAllergenCounter = 5;                
+$("#updateAddAlergenButton").click(function(){
+  
+ if (updateAllergenCounter >= 7) {
+   alert("Only 2 extra textboxes allowed");
+   return false;
+ }
+
+ updateAllergenCounter++;
+ var allergendiv = document.createElement("div");
+ allergendiv.classList.add('input-field');
+
+ var allergenInput = document.createElement("input");
+ allergenInput.setAttribute("id", "allergen" + updateAllergenCounter);
+ allergenInput.setAttribute("type", "text");
+ allergenInput.setAttribute("class", "validate");
+ allergenInput.setAttribute("name", "allergen" + updateAllergenCounter);
+
+ var allergenlabel = document.createElement("label");
+ var allergentext = document.createTextNode("extra Allergen");
+ allergenlabel.setAttribute("for", "allergen" + updateAllergenCounter);
+ allergenlabel.appendChild(allergentext);
+ 
+var allergenbr = document.createElement("br");
+    allergendiv.appendChild(allergenInput);
+    allergendiv.appendChild(allergenlabel);
+    
+    var allergenposition = document.getElementsByClassName('allergenBox')[0];
+    allergenposition.appendChild(allergendiv);
+    allergenposition.appendChild(allergenbr);
+});
+
 var stepCounter = 4;   
 $("#addStepButton").click(function(){
-   if (stepCounter >= 10) {
+   if (stepCounter >= 9) {
    alert("Only 10 textboxes allow");
    return false;
  }
@@ -414,3 +509,36 @@ var stepbr = document.createElement("br");
     stepposition.appendChild(stepdiv);
     stepposition.appendChild(stepbr);
 });
+
+
+var updateStepCounter = 8;   
+$("#updateAddStepButton").click(function(){
+   if (updateStepCounter >= 11) {
+   alert("Only 3  EXTRA textboxes allow");
+   return false;
+ }
+
+ updateStepCounter++;
+ var stepdiv = document.createElement("div");
+ stepdiv.classList.add('input-field');
+
+ var stepInput = document.createElement("input");
+ stepInput.setAttribute("id", "step" + updateStepCounter);
+ stepInput.setAttribute("type", "text");
+ stepInput.setAttribute("class", "validate");
+ stepInput.setAttribute("name","step" + updateStepCounter );
+ 
+ var steplabel = document.createElement("label");
+ var steptext = document.createTextNode("Extra Step");
+ steplabel.setAttribute("for", "step" + updateStepCounter);
+ steplabel.appendChild(steptext);
+ 
+var stepbr = document.createElement("br");
+    stepdiv.appendChild(stepInput);
+    stepdiv.appendChild(steplabel);
+    
+    var stepposition = document.getElementsByClassName('stepBox')[0];
+    stepposition.appendChild(stepdiv);
+    stepposition.appendChild(stepbr);
+});
+
