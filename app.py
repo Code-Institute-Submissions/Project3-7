@@ -128,19 +128,32 @@ def show_recipe(recipe_id):
     
 @app.route('/likes', methods=['GET', 'POST'])
 def likes():
-	if request.method == 'POST':
-		name = request.values.get('dish_name')
+	author = session['user']
+	name = request.values.get('dish_name')
 	recipe = recipes_collection.find_one({"dish_name": name })
-	if recipe['user_name'] == session['user']:
+	if recipe['user_name'] == author:
 		return jsonify({"error":" Cannot like your own recipes"});
-	myList = [];
-	myList.append(recipe)
-	#print (dumps(myList))
-	for user in recipe['voters']:
-		print(user)
-			
-#	return jsonify({"error":"You already like this recipe"});
-	return jsonify({"success":"data recived"});
+	myVoters = []
+	if 'voters' in recipe:
+		for user in recipe['voters']:
+			for k, v in user.items():
+				myVoters.append({k : v})
+				print("test")
+				if author == v:
+					return jsonify({"error":"You already liked this recipe"});
+	newLike = recipe['likes'] + 1;
+	myVoters.append({"user":author.lower()});
+	recipe_id = recipe['_id']
+	recipes_collection.update( { '_id': ObjectId(recipe_id)},
+		{"$set" :
+			{	
+				'likes': newLike,
+				'voters': (myVoters)
+			}
+		}
+	)
+	return jsonify({"success":"data updated", "likes": newLike});
+	'''  '''
 	
 @app.route('/search_recipes')
 def search_recipes():
@@ -285,55 +298,55 @@ def submit_recipe():
 		steps=[]
 		if form['step1'] !="":
 			steps.append({'step':form['step1'].lower()})
-			if form['step2'] !="":
-				steps.append({'step':form['step2'].lower()})
-				if form['step3'] !="":
-					steps.append({'step':form['step3'].lower()})
-					if form['step4'] !="":
-						steps.append({'step':form['step4'].lower()})
-						if "step5" in form:
-							steps.append({'step':form['step5'].lower()})
-							if "step6" in form:
-								steps.append({'step':form['step6'].lower()})
-								if "step7" in form:
-									steps.append({'step':form['step7'].lower()})
-									if "step8" in form:
-										steps.append({'step':form['step8'].lower()})
+		if form['step2'] !="":
+			steps.append({'step':form['step2'].lower()})
+		if form['step3'] !="":
+			steps.append({'step':form['step3'].lower()})
+		if form['step4'] !="":
+			steps.append({'step':form['step4'].lower()})
+		if "step5" in form:
+			steps.append({'step':form['step5'].lower()})
+		if "step6" in form:
+			steps.append({'step':form['step6'].lower()})
+		if "step7" in form:
+			steps.append({'step':form['step7'].lower()})
+		if "step8" in form:
+			steps.append({'step':form['step8'].lower()})
 								
 
 		allergens=[]
 		if form['allergen1'] !="":
 			allergens.append({'allergen':form['allergen1'].lower()})
-			if form['allergen2'] !="":
-				allergens.append({'allergen':form['allergen2'].lower()})
-				if "allergen3" in form:
-					allergens.append({'allergen':form['allergen3'].lower()})
-					if "allergen4" in form:
-						allergens.append({'allergen':form['allergen4'].lower()})
-						if "allergen5" in form:
-							allergens.append({'allergen':form['allergen5'].lower()})
+		if form['allergen2'] !="":
+			allergens.append({'allergen':form['allergen2'].lower()})
+		if "allergen3" in form:
+			allergens.append({'allergen':form['allergen3'].lower()})
+		if "allergen4" in form:
+			allergens.append({'allergen':form['allergen4'].lower()})
+		if "allergen5" in form:
+			allergens.append({'allergen':form['allergen5'].lower()})
 						
 		ingredients=[]
 		if form['ingredient1'] !="":
 			ingredients.append({'ingredient':form['ingredient1'].lower(),'portion':form['portion1'].lower()})
-			if form['ingredient2'] !="":
-				ingredients.append({'ingredient':form['ingredient2'].lower(),'portion':form['portion2'].lower()})
-				if form['ingredient3'] !="":
-					ingredients.append({'ingredient':form['ingredient3'].lower(),'portion':form['portion3'].lower()})
-					if form['ingredient4'] !="":
-						ingredients.append({'ingredient':form['ingredient4'].lower(),'portion':form['portion4'].lower()})
-						if "ingredient5" in form:
-							ingredients.append({'ingredient':form['ingredient5'].lower(),'portion':form['portion5'].lower()})
-							if "ingredient6" in form:
-								ingredients.append({'ingredient':form['ingredient6'].lower(),'portion':form['portion6'].lower()})
-								if "ingredient7" in form:
-									ingredients.append({'ingredient':form['ingredient7'].lower(),'portion':form['portion7'].lower()})
-									if "ingredient8" in form:
-										ingredients.append({'ingredient':form['ingredient8'].lower(),'portion':form['portion8'].lower()})
-										if "ingredient9" in form:
-											ingredients.append({'ingredient':form['ingredient9'].lower(),'portion':form['portion9'].lower()})
-											if "ingredient10" in form:
-												ingredients.append({'ingredient':form['ingredient10'].lower(),'portion':form['portion10'].lower()})
+		if form['ingredient2'] !="":
+			ingredients.append({'ingredient':form['ingredient2'].lower(),'portion':form['portion2'].lower()})
+		if form['ingredient3'] !="":
+			ingredients.append({'ingredient':form['ingredient3'].lower(),'portion':form['portion3'].lower()})
+		if form['ingredient4'] !="":
+			ingredients.append({'ingredient':form['ingredient4'].lower(),'portion':form['portion4'].lower()})
+		if "ingredient5" in form:
+			ingredients.append({'ingredient':form['ingredient5'].lower(),'portion':form['portion5'].lower()})
+		if "ingredient6" in form:
+			ingredients.append({'ingredient':form['ingredient6'].lower(),'portion':form['portion6'].lower()})
+		if "ingredient7" in form:
+			ingredients.append({'ingredient':form['ingredient7'].lower(),'portion':form['portion7'].lower()})
+		if "ingredient8" in form:
+			ingredients.append({'ingredient':form['ingredient8'].lower(),'portion':form['portion8'].lower()})
+		if "ingredient9" in form:
+			ingredients.append({'ingredient':form['ingredient9'].lower(),'portion':form['portion9'].lower()})
+		if "ingredient10" in form:
+			ingredients.append({'ingredient':form['ingredient10'].lower(),'portion':form['portion10'].lower()})
 		
 		likes=[]
 		likes.append({"rating": 0})
@@ -357,7 +370,7 @@ def submit_recipe():
 					'ingredients':(ingredients),
 					'method': (steps),
 					'allergens': (allergens),
-					'likes':(likes)
+					'likes':0
 				}
 			)
 			# Check if user is actualy saved

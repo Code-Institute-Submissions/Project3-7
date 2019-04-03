@@ -22,11 +22,7 @@
                   <i class="far fa-clock"></i> <strong>Prep Time: </strong> {{ recipe.prep_time }}</br>
                   <i class="far fa-clock"></i> <strong>Cooking Time: </strong> {{ recipe.cook_time }}</br>
                   <i class=" tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
-                  {% for record in recipe.likes %}
-                    {% if record.rating is defined %}
-                      <i class="fas fa-heart"></i> <strong>Likes: </strong>{{ record.rating }} </br>
-                    {% endif %} 
-                  {% endfor %}
+                  <i class="fas fa-heart"></i> <strong>Likes: </strong>{{ recipe.likes }} </br>
                   Allergens:
                   {% for item in recipe.allergens %}
                   <div class="pink lighten-3 chip">

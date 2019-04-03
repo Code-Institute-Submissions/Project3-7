@@ -63,7 +63,8 @@ $("#likesButton").click(function() {
           })
           .done(function(data) {
               if(data.success) {
-                  alert("success"+data.success);
+                  $(".wrap").fadeOut(100).fadeIn(100);
+                  $(".votes").text(data.likes);
               } else if(data.error)
               { 
                 alert("error"+data.error);

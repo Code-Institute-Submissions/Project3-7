@@ -20,9 +20,7 @@
                 {% endfor %}
             <div class="wrap">
                 <a id="likesButton" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">favorite_border</i></a>
-                {% for recipe in recipe.likes %}
-                <span class="votes">{{ recipe.rating }}</span> 
-                 {% endfor %}
+                <span class="votes">{{ recipe.likes }}</span> 
             </div>
          </div>
          <div class="col s12 m6 center-align">
