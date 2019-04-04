@@ -16,6 +16,9 @@ from flask_pymongo import PyMongo
 MONGODB_URI = os.getenv("MONGO_URI")  
 COLLECTION_NAME ="recipes"
 
+FIELDS = {'user_name': True, 'type': True, 'origin': True, 'likes': True, 'allergens': True, 'dish_name': True, '_id': False}
+
+
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -153,7 +156,6 @@ def likes():
 		}
 	)
 	return jsonify({"success":"data updated", "likes": newLike});
-	'''  '''
 	
 @app.route('/search_recipes')
 def search_recipes():
@@ -442,8 +444,18 @@ def filter_search():
 		
 @app.route('/statistics')
 def statistics():
-		
-	return
+	return render_template('dashboard.html')
+	
+	
+@app.route("/dashboard_data")
+def dashboard_data():
+    recipes = recipes_collection.find(projection=FIELDS)
+    print("graphs")
+    json_recipes = []
+    for recipe in recipes:
+        json_recipes.append(recipe)
+    json_recipes = json.dumps(json_recipes)
+    return json_recipes
 	
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

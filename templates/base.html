@@ -86,5 +86,14 @@
   });
     </script>
 </body>
-    
+{% if session.user %}
+<footer class="page-footer">
+  <div class="footer-copyright">
+    <div class="container">
+      © 2019 Copyright John Mellaley
+      <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+    </div>
+  </div>
+</footer
+{% endif %}
 </html>

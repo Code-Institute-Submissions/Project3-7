@@ -299,9 +299,6 @@ function createHTMLSearch(array){
     }
 }
 
-
-
-
 var ingredCounter = 4;
 $("#addIngredButton").click(function() {
     if (ingredCounter > 10) {
@@ -543,3 +540,6 @@ var stepbr = document.createElement("br");
     stepposition.appendChild(stepbr);
 });
 
+function dashboard() {
+    console.log("test");
+}
