@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2 >Site Dashboard</h2>
+<h3>Site Dashboard</h3>
 
 <div class="container">
     <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12">
             <h5>Authors with the most likes</h5>
             <div id="chart_user_likes"></div>
         </div>
-        <div class="col s12 m6">
+    </div>
+    <div class="row">
+        <div class="col s6">
             <h5>Dishs with the most likes</h5>
             <div id="chart_dish_likes"></div>
         </div>
@@ -19,7 +21,7 @@
             <div id="chart_origin"></div>
         </div>
             <div class="col s12 m6">
-                <h5>Authors who submitted dish with the most like</h5>
+                <h5>Recipes by Type</h5>
                 <div id="chart_type"></div>
             </div>
     </div>

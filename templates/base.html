@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+     
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Heebo|Roboto" rel="stylesheet">
     <!--Import Google Icon Font-->
    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href= "{{url_for('static', filename='css/style.css')}}" type="text/css" />
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> 
-    
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
 
 </head>
 
 <body>
       
-{% if session.user %}
-
-  <nav>
-    <div class="nav-wrapper">
-      <a href="{{url_for('get_recipes')}}" class="brand-logo">
-        <img src="../static/images/FaviconLogo.png"></img></a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        
-          <li><a href="{{url_for('logout')}}">Logout</a></li>
-          <li><a href="{{url_for('profile')}}">Home</a></li>
-          <li><a href="{{url_for('get_recipes')}}">All Recipes</a></li>
-          <li><a href="{{url_for('search_recipes')}}">Search Recipes</a></li>
-          <li><a href="{{url_for('add_recipe')}}">Add recipes</a></li>
-          <li><a href="{{url_for('statistics')}}">Site Statistics</a></li>
-      </ul>
-    </div>
-  </nav>
-
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="{{url_for('logout')}}">Logout</a></li>
-    <li><a href="{{url_for('get_recipes')}}">Home</a></li>
-    <li><a href="#.html">Search Recipes</a></li>
-    <li><a href="#.html">Add Recipest</a></li>
-    <li><a href="#.html">Site Statistics</a></li>
-  </ul>
-  
- {% endif %} 
+  {% if session.user %}
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="{{url_for('get_recipes')}}" class="brand-logo">
+          <img src="../static/images/FaviconLogo.png"></img></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="{{url_for('profile')}}">Home</a></li>
+            <li><a href="{{url_for('get_recipes')}}">All Recipes</a></li>
+            <li><a href="{{url_for('search_recipes')}}">Search Recipes</a></li>
+            <li><a href="{{url_for('add_recipe')}}">Add recipes</a></li>
+            <li><a href="{{url_for('statistics')}}">Dashboard</a></li>
+            <li><a href="{{url_for('logout')}}">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+      <li><a href="{{url_for('profile')}}">Home</a></li>
+      <li><a href="{{url_for('get_recipes')}}">All Recipes</a></li>
+      <li><a href="{{url_for('search_recipes')}}">Search Recipes</a></li>
+      <li><a href="{{url_for('add_recipe')}}">Add recipes</a></li>
+      <li><a href="{{url_for('statistics')}}">Dashboard</a></li>
+      <li><a href="{{url_for('logout')}}">Logout</a></li>
+    </ul>
+  </header>
+   {% endif %} 
    <!-- Flashed messages alerts modal -->
+
 <div id="alerts" class="container-fluid">
   <div class="row justify-content-around">
     <div id="messages">
@@ -60,10 +62,12 @@
     </div>
   </div>
 </div>
+<main>
+
     {% block content %}
     
     {% endblock %}
-
+</main>
     
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -85,15 +89,19 @@
          $('.modal').modal();
   });
     </script>
-</body>
 {% if session.user %}
-<footer class="page-footer">
-  <div class="footer-copyright">
-    <div class="container">
-      © 2019 Copyright John Mellaley
-      <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+  <footer class="page-footer">
+    <div class="footer-copyright">
+      <div class="container">
+        © 2019 Copyright John Mellaley
+        <a class="grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-linkedin"></i></a>
+        <a class="grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-twitter"></i></a>
+        <a class= "grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-instagram"></i></a>
+        <a class= "grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-facebook"></i></a>
+      </div>
     </div>
-  </div>
-</footer
+  </footer
 {% endif %}
+</body>
+
 </html>

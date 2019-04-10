@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-<h1>Search</h1>
+<h3>Search</h3>
+<h4>Scroll to bottom of page to see results</h4>
   <!--  first seach -->
 <div class="row">
-  <div class="col m2 offset-m1">
+  <div class="col s12 m2 offset-m1">
+    <p class= "instruction">Name must be spelled as in Database.(Not case sensitive) </p>
     <form id="name_search_form"> 
       <div class="input-field">
         <input id="dish_name" name="dish_name" type="text" class="validate" required>
@@ -19,9 +21,10 @@
 
   
 <!--  second search -->
-<div class="box col m4 offset-m1">
+<div class="box col s12 m4 offset-m1">
   <div class="col m10 offset-m1">
-    
+    <p class= "instruction">Please select two ingredients, allergen is optional</p>
+    </br>
     <form id="ingredientForm" name="ingredientForm">
       <div class="input-field">
         <input id="ingredient1" name="ingredient1" type="text" class="validate" required>
@@ -48,7 +51,9 @@
   </div>
   </div>
   <!--  third search -->
-  <div class="col m3 offset-m1">
+  <div class="col s12 m3 offset-m1">
+    <p class= "instruction">Please select type and origin, both are mandatory</p>
+    </br>
     <form id="origintype_search_form" name="origintype_search_form" method="post">
       <div class="input-field">
         <select id="filter_type" name="filter_type">
@@ -62,6 +67,7 @@
             <label>Dish Type</label>
       </div>
       </br>
+
       <div class="input-field" >
           <select id="country" name="country">
             <option value="" disabled selected>Choose your option</option>
@@ -318,38 +324,17 @@
         </button>
     </form>
   </div>
-  
-  
 </div>
+
 <div class="divider"></div>
-<div id="result_message"></div>
-<div class="searchresult"></div>
+<div class="row"> 
+  <div class= "search_result col s12 offset-s4" id="result_message"></div>
+</div>
+<div class="row">
+  <div class="searchresult"></div>
+</div>
     </br>
     </br>
- <!--   <section class="card-output">
-      <div class="col s12 m6 l4">
-        <div class="card" >
-          <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src="">
-          </div>
-        <div class="card-content">
-        <span id="c-title" class="card-title grey-text text-darken-4">test</span>
-        <a id="link" href="#">Cooking Instructions</a><i class="activator material-icons right tooltipped" data-position="bottom" data-tooltip="Details">add</i>
-        </div>
-        <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">yesy<i class="material-icons right">close</i></span>
-          <div class="back-card-jm">
-            <i class=" tiny material-icons">face</i><strong>Author:</strong> <span class ="author"></span></br>
-            <i class="fas fa-globe"></i> <strong>Origin: </strong> <span class = "origin"></span></br>
-            <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> <span class = "type"></span> </br>
-            <i class="far fa-clock"></i> <strong>Prep Time: </strong> <span class = "prep-time"></span></br>
-            <i class="far fa-clock"></i> <strong>Cooking Time: </strong> <span class = "cook-time"></span></br>
-            <i class=" tiny material-icons">people</i> <strong>Services: </strong> <span class = "serves"></span>  </br>
-            <i class="fas fa-heart"></i> <strong>Rating: </strong> <span class = "rating"></span> </br>
-          </div>
-        </div>
-      </div>
-    </section>
- -->
+
 
 {% endblock %}

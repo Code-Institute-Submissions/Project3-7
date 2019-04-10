@@ -2,22 +2,21 @@
 <div class="hero-image">
     <div class="hero-text">
         
-        <h1 style="font-size:50px">Foodie</h1>
-        <p>Cook Book</p>
-        <a href="{{url_for('login')}}" class="btn modal-trigger">Login</a>
+        <h1 class="white-text">Foodie</h1>
+        <h3 class ="white-text">Cook Book</h3>
+        <a href="{{url_for('login')}}" class="btn-large white-text red lighten-3 login-btn"> Login</a>
         </br>
         <!-- Modal Register Trigger -->
-        <a class="waves-effect waves-light modal-trigger" href="#regModal">Register</a>
+        </br>
+        <a class="blue-text waves-effect waves-light modal-trigger reg-link" href="#regModal">Register</a>
     </div>
 </div>
-
-
 
 
 <!-- Modal Structure -->
 <div id="regModal" class="modal">
     <div class="modal-content">
-        <h4>Register</h4>  
+        <h3>Register</h3>  
        <!-- method="POST" action="/register/" -->
         <form id="form-signin" >
             <div class="row">

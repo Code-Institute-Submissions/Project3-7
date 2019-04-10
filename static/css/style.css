@@ -2,9 +2,33 @@ html, body {
     height:100%;
 } 
 
-body{
-    font-family: arial;
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
     text-transform: capitalize;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+
+h3 {
+    color: #ff6347;
+}
+  
+.login-btn{
+    border-radius: 25px;
+}
+.reg-link{
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.social-links{
+    font-size: 18px;
+    margin: 10px;
 }
 
 .hero-image{
@@ -59,7 +83,14 @@ body{
      line-height: 2;
 }
 
+.search_result{
+    font-size: 24px;
+    color: #ff6347;
+}
 
+.instruction{
+    color: #ff6347;
+}
 /*-------------------------------------------------------Display Recipe--------------------------------------*/
 .basic_detials{
     text-transform: capitalize;
@@ -100,8 +131,8 @@ body{
 #chart_dish_likes .x .tick text {
    text-anchor: end !important;
    transform: rotate(90deg);
-   margin-bottom: 20px;
 }
+
 
 
 

@@ -59,16 +59,12 @@ def user_auth():
 			session['user'] = form['user_name']
 			g.golbalUser = form['user_name']
 			flash("You were logged in!")
-			print ("You were logged in!")
-			print(user_in_db['user_name'])
 			return redirect(url_for('profile', myuser=user_in_db['user_name']))
 		else:
 			flash("Wrong password or user name!")
-			print("Wrong password or user name!")
 			return redirect(url_for('login'))
 	else:
 		flash("You must be registered!")
-		print("you must be registered")
 		return redirect(url_for('index'))
     
 # Sign up
@@ -100,8 +96,8 @@ def register():
 			if user_in_db:
 				# Log user in (add to session)
 				print("data loaded")
-				# session['user'] = user_in_db['user_name']
-				return jsonify({"success":"Register Completed"});
+				session['user'] = user_in_db['user_name']
+				return jsonify({"success":"Register Completed, You can now login in."});
 			else:
 				print("data not laoded")
 				return jsonify({"error":"Problem loading data"});
@@ -117,11 +113,11 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
 	user = session['user'];
-	return render_template("profile.html", myrecipes = mongo.db.recipes.find({"user_name": user}))
+	return render_template("profile.html", myrecipes = mongo.db.recipes.find({"user_name": user}).sort('likes', pymongo.DESCENDING))
 
 @app.route('/get_recipes')
 def get_recipes():
-    return render_template("recipes.html", recipes = mongo.db.recipes.find())
+    return render_template("recipes.html", recipes = mongo.db.recipes.find().sort('likes', pymongo.DESCENDING) )
     
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
@@ -297,6 +293,9 @@ def update_recipe(recipe_id):
 def submit_recipe():
 	if request.method == 'POST':
 		form = request.form.to_dict()
+		if form['type'] == "Choose your option":
+			flash("Choose Type");	
+			return redirect(url_for('add_recipe'))
 		steps=[]
 		if form['step1'] !="":
 			steps.append({'step':form['step1'].lower()})
@@ -352,6 +351,7 @@ def submit_recipe():
 		
 		likes=[]
 		likes.append({"rating": 0})
+		
 		# If so try to find the user in db
 		recipe = recipes_collection.find_one({"dish_name" : form['dish_name']})
 		if recipe:

@@ -35,13 +35,9 @@ $('#form-signin').on('submit', function() {
               }
               else {
                 $('#result_pass').text(data.success)
-                setTimeout(function()
-                { 
-                     $('#regModal').hide()
-                }, 10000);
-                alert("You have been registered. You can now login");
-               /* let profileUrl ="/profile/<"+user +">";
-                window.location.replace(profileUrl);*/
+                $('#regModal').hide()
+                let profileUrl ="/profile";
+                window.location.replace(profileUrl);
               }
           });
     } else {
@@ -134,7 +130,13 @@ $('#ingredientForm').on('submit', function () {
 $('#origintype_search_form').on('submit', function () {
     event.preventDefault();
     var filter_type = $('#filter_type').val()
+ /*   if (filter_type ="Choose your option"){
+        alert("PLease choose your type");
+    }*/
     var country = $('#country').val() 
+  /*  if (country ="Choose your option"){
+        alert("PLease choose your Country");
+    }*/
     $.ajax({
             type: 'POST',
             data: {
@@ -194,7 +196,8 @@ function createHTMLSearch(array){
         var acard =document.createElement('a');
         acard.classList.add('link');
         acard.innerHTML= "Cooking instructions";
-        acard.setAttribute("href","/show_recipe"+ array[i]._id);
+        var link = JSON.stringify(array[i]._id);
+        acard.setAttribute("href","/show_recipe"+ link);
         var icard =document.createElement('i');
         icard.classList.add('activator', 'material-icons', 'right','tooltipped');
         icard.setAttribute('data-position','bottom');
@@ -232,10 +235,13 @@ function createHTMLSearch(array){
         strongface.innerHTML = "Author: "+ array[i].user_name ;
         var strongorigin= document.createElement("strong");
         strongorigin.innerHTML= "Origin: "+ array[i].origin;
+        
         var strongtype= document.createElement("strong");
         strongtype.innerHTML="type: "+ array[i].type;
+        
         var strongprep= document.createElement("strong");
         strongprep.innerHTML="Prep Time: "+ array[i].prep_time;
+        
         var strongcook= document.createElement("strong");
         strongcook.innerHTML= "Cook Time: "+ array[i].cook_time;
         var strongserves= document.createElement("strong");
@@ -245,11 +251,13 @@ function createHTMLSearch(array){
         var iface =document.createElement("i");
         iface.classList.add("tiny", "material-icons");
         iface.innerHTML = "face";
-        var iorigin =document.createElement("i");
-        iorigin.classList.add("fas","fa-globe");
+        
      
         var itype =document.createElement("i");
         itype.classList.add("fas", "fa-pizza-slice");
+        
+        var iorigin =document.createElement("i");
+        iorigin.classList.add("fas","fa-globe");
        
         var iprep =document.createElement("i");
         iprep.classList.add('far', 'fa-clock');
@@ -288,13 +296,6 @@ function createHTMLSearch(array){
         backcarddiv.appendChild(strongserves);
         backcarddiv.appendChild(irating);
         backcarddiv.appendChild(strongrating);
-       
-        iorigin.appendChild(strongorigin);
-        itype.appendChild(strongtype);
-        iprep.appendChild(strongprep);
-        icook.appendChild(strongcook);
-        iserves.appendChild(strongserves);
-        irating.appendChild(strongrating);
         
     }
 }
@@ -305,6 +306,7 @@ $("#addIngredButton").click(function() {
       alert("Only 10 textboxes allow");
       return false;
     }
+    
     ingredCounter++;
     var ingreddiv = document.createElement("div");
     ingreddiv.classList.add('input-field');
@@ -540,6 +542,3 @@ var stepbr = document.createElement("br");
     stepposition.appendChild(stepbr);
 });
 
-function dashboard() {
-    console.log("test");
-}

@@ -1,16 +1,14 @@
 {% extends 'base.html' %} {% block content %}
 
-<h4> Welcome {{ session['user'] }} </h4>
+<h3> Welcome {{ session['user'] }} </h3>
 <div class="container">
-        <div class="row">
-            <h4>
-                {% if not myrecipes %}
-                    Here are your recipes
-                {% else %}
-                    You have no recipes
-                {% endif %}
-            </h4>
-{% for recipe in myrecipes %}
+  <div class="row">
+    {% for recipe in myrecipes %}
+      {% if loop.index == 1 %}
+        <h5>Here are your recipes <br>
+        (Desending based on the number of likes they have recieved) </h5>
+        </br>
+      {% endif %}
           <div class="col s12 m6 l4">
             <div class="card small">
               <div class="card-image waves-effect waves-block waves-light">
@@ -30,13 +28,19 @@
                   <i class="far fa-clock"></i> <strong>Cooking Time: </strong> {{ recipe.cook_time }}</br>
                   <i class=" tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
                   <i class="fas fa-heart"></i> <strong>Rating: </strong>{{ recipe.likes }} </br>
-                  Allergens: <strong>{{ recipe.allergens|join(' ') }}</strong>
-                      
+                  Allergens:
+                  {% for item in recipe.allergens %}
+                  <div class="pink lighten-3 chip">
+                     <strong>{{ item.allergen }}</strong>
+                  </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>
           </div>
-{% endfor %}
+    {% else %}
+      <h4>You have no recipes: </br> To add your own recipes go to 'Add recipe'. </br>  To see othere people recipes go to 'All recipes'</h4>
+    {% endfor %}
 </div>
 </div>
     
