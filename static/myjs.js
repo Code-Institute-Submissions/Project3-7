@@ -1,11 +1,7 @@
 $(document).ready(function() {
     
-
+// flash is used for error message
 flashed_messages();
-
-/*
-Alerts modal
-*/
 
 function flashed_messages() {
 	let messages = parseInt($("#messages p").length);
@@ -17,8 +13,10 @@ function flashed_messages() {
 	}
 }
 
+//registration
 $('#form-signin').on('submit', function() {
      $('#result_pass').text("")
+     //check that the two passwords on the form are the same and if send data to back end
     if($('#user_password').val() == $('#user_password1').val()){
         var user = $('#username').val();
         $.ajax({
@@ -34,6 +32,7 @@ $('#form-signin').on('submit', function() {
                 $('#result_pass').text(data.error)
               }
               else {
+                  //if okay close modal and send user to home page
                 $('#result_pass').text(data.success)
                 $('#regModal').hide()
                 let profileUrl ="/profile";
@@ -46,9 +45,10 @@ $('#form-signin').on('submit', function() {
         event.preventDefault();
 });
 
-
+// update like per recipe
 $("#likesButton").click(function() {
     var title = document.getElementById("show_title");
+    //get dish name
     var this_dish_name = title.firstChild.nodeValue;
     $.ajax({
             type: 'POST',
@@ -59,6 +59,7 @@ $("#likesButton").click(function() {
           })
           .done(function(data) {
               if(data.success) {
+                  // increase like by one
                   $(".wrap").fadeOut(100).fadeIn(100);
                   $(".votes").text(data.likes);
               } else if(data.error)
@@ -68,6 +69,7 @@ $("#likesButton").click(function() {
           });
 });
 
+// seach name
 $('#name_search_form').on('submit', function() {
     event.preventDefault();
     $.ajax({
@@ -84,9 +86,10 @@ $('#name_search_form').on('submit', function() {
             }
             else {
                 $('#result_message').text("Here is the result of your search")
+                //clear old results
                 clearSearchReults();
                 var array = JSON.parse(data);
-                console.log(array);
+                //create new cards with found recipe
                 createHTMLSearch(array);
                 }
           });
@@ -94,7 +97,7 @@ $('#name_search_form').on('submit', function() {
     
 });
 
-
+// search based on allergen and ingredients
 $('#ingredientForm').on('submit', function () {
     event.preventDefault();
     var ingred1 = $('#ingredient1').val()
@@ -118,25 +121,17 @@ $('#ingredientForm').on('submit', function () {
                     $('#result_message').text("Here is the result of your search")
                     clearSearchReults();
                     var array = JSON.parse(data);
-                    console.log(array);
                     createHTMLSearch(array);
                     }
           });
 });
 
-
-
-
+//search based on origin and type
 $('#origintype_search_form').on('submit', function () {
     event.preventDefault();
     var filter_type = $('#filter_type').val()
- /*   if (filter_type ="Choose your option"){
-        alert("PLease choose your type");
-    }*/
     var country = $('#country').val() 
-  /*  if (country ="Choose your option"){
-        alert("PLease choose your Country");
-    }*/
+  
     $.ajax({
             type: 'POST',
             data: {
@@ -159,10 +154,10 @@ $('#origintype_search_form').on('submit', function () {
           });
 });
 
-$('.card-output').hide();
+/*$('.card-output').hide();*/
   
 
-
+//clear previous results
 function clearSearchReults(){
 var myNode = document.getElementsByClassName("searchresult")[0];
     while (myNode.firstChild) {
@@ -170,8 +165,10 @@ var myNode = document.getElementsByClassName("searchresult")[0];
     }
 }
 
+//create new results. This create all the elemments. Set up elements the same was as card displayed on home page
 function createHTMLSearch(array){
     var len = array.length;
+    //create row for every 3 finds
     var j=0;
     for (var i=0; i<len; i++) {
         if(j==0 || j/3==0){
@@ -196,8 +193,9 @@ function createHTMLSearch(array){
         var acard =document.createElement('a');
         acard.classList.add('link');
         acard.innerHTML= "Cooking instructions";
-        var link = JSON.stringify(array[i]._id);
-        acard.setAttribute("href","/show_recipe"+ link);
+        var link = JSON.stringify(array[i]._id["$oid"]);
+        var newLink = link.replace(/"/g, "");
+        acard.setAttribute("href","/show_recipe/"+ newLink);
         var icard =document.createElement('i');
         icard.classList.add('activator', 'material-icons', 'right','tooltipped');
         icard.setAttribute('data-position','bottom');
@@ -300,6 +298,8 @@ function createHTMLSearch(array){
     }
 }
 
+
+//add recipe give the author the option of added more ingredient fields on the form
 var ingredCounter = 4;
 $("#addIngredButton").click(function() {
     if (ingredCounter > 10) {
@@ -354,6 +354,8 @@ $("#addIngredButton").click(function() {
     portionposition.appendChild(portionbr);
 });
 
+
+// as above only with the update form
 var updateIngredCounter = 10;
 $("#updateAddIngredButton").click(function() {
     if (updateIngredCounter > 12) {
@@ -407,12 +409,7 @@ $("#updateAddIngredButton").click(function() {
     portionposition.appendChild(portionbr);
 });
 
-
-
-
-
-
-
+// give the author a change to add more allergens
 var allergenCounter = 2;                
 $("#addAlergenButton").click(function(){
   
@@ -446,7 +443,7 @@ var allergenbr = document.createElement("br");
 });
 
 
-
+//as above only with update form
 var updateAllergenCounter = 5;                
 $("#updateAddAlergenButton").click(function(){
   
@@ -479,10 +476,11 @@ var allergenbr = document.createElement("br");
     allergenposition.appendChild(allergenbr);
 });
 
+// give author the option of adding more steps
 var stepCounter = 4;   
 $("#addStepButton").click(function(){
    if (stepCounter >= 9) {
-   alert("Only 10 textboxes allow");
+   alert("Only 8 textboxes allow");
    return false;
  }
 
@@ -511,6 +509,7 @@ var stepbr = document.createElement("br");
 });
 
 
+// as above only with the update form
 var updateStepCounter = 8;   
 $("#updateAddStepButton").click(function(){
    if (updateStepCounter >= 11) {

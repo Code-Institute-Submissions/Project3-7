@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Heebo|Roboto" rel="stylesheet">
     <!--Import Google Icon Font-->
@@ -14,8 +18,8 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script> 
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
-
+    
+    <title>Foodie</title>
 </head>
 
 <body>
@@ -87,17 +91,21 @@
         
          $(document).ready(function(){
          $('.modal').modal();
-  });
+         });
+         
+         $(document).ready(function(){
+            $('select').formSelect();
+          });
     </script>
 {% if session.user %}
   <footer class="page-footer">
     <div class="footer-copyright">
       <div class="container">
         © 2019 Copyright John Mellaley
-        <a class="grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-linkedin"></i></a>
-        <a class="grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-twitter"></i></a>
-        <a class= "grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-instagram"></i></a>
-        <a class= "grey-text text-lighten-4 right" target="_blank" href="#"><i class="social-links fab fa-facebook"></i></a>
+        <a class="grey-text text-lighten-4 right" target="_blank" href="https://www.linkedin.com/"><i class="social-links fab fa-linkedin"></i></a>
+        <a class="grey-text text-lighten-4 right" target="_blank" href="https://twitter.com/?lang=en"><i class="social-links fab fa-twitter"></i></a>
+        <a class= "grey-text text-lighten-4 right" target="_blank" href="https://www.instagram.com/?hl=en"><i class="social-links fab fa-instagram"></i></a>
+        <a class= "grey-text text-lighten-4 right" target="_blank" href="https://www.facebook.com"><i class="social-links fab fa-facebook"></i></a>
       </div>
     </div>
   </footer

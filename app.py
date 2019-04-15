@@ -32,22 +32,24 @@ mongo = PyMongo(app)
 users_collection = mongo.db.users
 recipes_collection = mongo.db.recipes
 
+# index page
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template("index.html")
     
-# Sign up
+# login page
 @app.route('/login')
 def login():
 	# Check if user is not logged in already
 	return render_template('login.html')
-	
+
+#Check authorization
 @app.route('/user_auth', methods=['POST'])
 def user_auth():
-	
 	form = request.form.to_dict()
 	user_in_db = users_collection.find_one({"user_name": form['user_name']})
+	# check if user already logged in
 	if 'user' in session:
 		flash("your in session allready");
 		return redirect(url_for('profile', myuser=user_in_db['user_name']))
@@ -57,8 +59,9 @@ def user_auth():
 		if check_password_hash(user_in_db['user_password'], form['user_password']):
 			# Log user in (add to session)
 			session['user'] = form['user_name']
-			g.golbalUser = form['user_name']
+		#	g.golbalUser = form['user_name']
 			flash("You were logged in!")
+			#redirect to home page
 			return redirect(url_for('profile', myuser=user_in_db['user_name']))
 		else:
 			flash("Wrong password or user name!")
@@ -95,11 +98,9 @@ def register():
 			user_in_db = users_collection.find_one({"user_name": form['user_name']})
 			if user_in_db:
 				# Log user in (add to session)
-				print("data loaded")
 				session['user'] = user_in_db['user_name']
 				return jsonify({"success":"Register Completed, You can now login in."});
 			else:
-				print("data not laoded")
 				return jsonify({"error":"Problem loading data"});
 				
 @app.route('/logout')
@@ -109,40 +110,48 @@ def logout():
 	flash('You were logged out!')
 	return redirect(url_for('index'))
 
-				
+#home page with user recipes in descending order			
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
 	user = session['user'];
 	return render_template("profile.html", myrecipes = mongo.db.recipes.find({"user_name": user}).sort('likes', pymongo.DESCENDING))
 
+#all recipes in decending order
 @app.route('/get_recipes')
 def get_recipes():
     return render_template("recipes.html", recipes = mongo.db.recipes.find().sort('likes', pymongo.DESCENDING) )
-    
+   
+#display recipes 
 @app.route('/show_recipe/<recipe_id>')
 def show_recipe(recipe_id):
     return render_template("show_recipe.html",
     recipe = mongo.db.recipes.find_one({ '_id': ObjectId(recipe_id) })
     )
     
+#likes update
 @app.route('/likes', methods=['GET', 'POST'])
 def likes():
 	author = session['user']
 	name = request.values.get('dish_name')
 	recipe = recipes_collection.find_one({"dish_name": name })
+	#check is user is also Author
 	if recipe['user_name'] == author:
 		return jsonify({"error":" Cannot like your own recipes"});
+	#create a list to store all voters who already liked the recipe
 	myVoters = []
 	if 'voters' in recipe:
 		for user in recipe['voters']:
 			for k, v in user.items():
 				myVoters.append({k : v})
-				print("test")
+				#check if user already liked this recipe
 				if author == v:
 					return jsonify({"error":"You already liked this recipe"});
-	newLike = recipe['likes'] + 1;
+	# increase lik count
+	newLike = recipe['likes'] + 1; 
+	#add new voter to list
 	myVoters.append({"user":author.lower()});
 	recipe_id = recipe['_id']
+	#update document
 	recipes_collection.update( { '_id': ObjectId(recipe_id)},
 		{"$set" :
 			{	
@@ -153,30 +162,35 @@ def likes():
 	)
 	return jsonify({"success":"data updated", "likes": newLike});
 	
+#load search page
 @app.route('/search_recipes')
 def search_recipes():
     return render_template("search_recipes.html", recipes = mongo.db.recipes.find())
 
-
+#load add recipe page with for,
 @app.route('/add_recipe') 
 def add_recipe():
     return render_template("add_recipe.html")
-    
+
+#delete recipe    
 @app.route('/delete_recipe/<recipe_id>')
 def delete_recipe(recipe_id):
 	recipes_collection.remove({'_id': ObjectId(recipe_id)})
 	flash("Recipe has been deleted");	
 	return redirect(url_for('profile'))
 	
+#load update recipe page
 @app.route('/edit_recipe/<recipe_id>')
 def edit_recipe(recipe_id):
 	the_recipe =  recipes_collection.find_one({"_id": ObjectId(recipe_id)})
 	return render_template('edit_recipe.html', recipe=the_recipe)
 	
+#update recipe
 @app.route('/update_recipe/<recipe_id>',methods=['GET', 'POST'])
 def update_recipe(recipe_id):
 	if request.method == 'POST':
 		form = request.form.to_dict()
+		# load steps into a list if field not blank
 		steps=[]
 		if "step1" in request.form:
 			if form['step1'] !="":
@@ -208,7 +222,8 @@ def update_recipe(recipe_id):
 				if "step10" in request.form:
 					if form['step9'] !="":
 						steps.append({'step':form['step10'].lower()})
-												
+						
+		# load allergens into a list if field not blank								
 		allergens=[]
 		if "allergen1" in request.form:
 			if form['allergen1'] !="":
@@ -232,6 +247,7 @@ def update_recipe(recipe_id):
 			if form['allergen7'] !="":
 				allergens.append({'allergen':form['allergen7'].lower()})
 		
+		#load ingredients and portions into list of not blank
 		ingredients=[]
 		if "ingredient1" in request.form:
 			if form['ingredient1'] !="":
@@ -269,7 +285,8 @@ def update_recipe(recipe_id):
 		if "ingredient12" in request.form:	
 			if form['ingredient12'] !="":
 				ingredients.append({'ingredient':form['ingredient12'].lower(),'portion':form['portion12'].lower()})
-																									
+	
+	#update recipe																								
 	recipes_collection.update( { '_id': ObjectId(recipe_id)},
 		{"$set" :
 			{	
@@ -289,13 +306,14 @@ def update_recipe(recipe_id):
 	flash("Your recipe was updated")
 	return redirect(url_for('profile'))
 	
+#add recipe to database
 @app.route('/submit_recipe', methods=['GET', 'POST']) 
 def submit_recipe():
 	if request.method == 'POST':
 		form = request.form.to_dict()
-		if form['type'] == "Choose your option":
-			flash("Choose Type");	
-			return redirect(url_for('add_recipe'))
+		# put some valittion on the two options here
+		
+		#add steps to list, must be a list one
 		steps=[]
 		if form['step1'] !="":
 			steps.append({'step':form['step1'].lower()})
@@ -314,7 +332,7 @@ def submit_recipe():
 		if "step8" in form:
 			steps.append({'step':form['step8'].lower()})
 								
-
+		#add allergns to list if any
 		allergens=[]
 		if form['allergen1'] !="":
 			allergens.append({'allergen':form['allergen1'].lower()})
@@ -326,7 +344,8 @@ def submit_recipe():
 			allergens.append({'allergen':form['allergen4'].lower()})
 		if "allergen5" in form:
 			allergens.append({'allergen':form['allergen5'].lower()})
-						
+		
+		#add ingredient and portion. must be a least one ingredient				
 		ingredients=[]
 		if form['ingredient1'] !="":
 			ingredients.append({'ingredient':form['ingredient1'].lower(),'portion':form['portion1'].lower()})
@@ -349,6 +368,7 @@ def submit_recipe():
 		if "ingredient10" in form:
 			ingredients.append({'ingredient':form['ingredient10'].lower(),'portion':form['portion10'].lower()})
 		
+		# set likes to zero
 		likes=[]
 		likes.append({"rating": 0})
 		
@@ -359,6 +379,7 @@ def submit_recipe():
 			return redirect(url_for('add_recipe'))
 		else:	
 			author = session['user'];
+			#add recipe
 			recipes_collection.insert_one(
 				{
 					'user_name': author.lower(),
@@ -379,11 +400,10 @@ def submit_recipe():
 			recipe_in_db = recipes_collection.find_one({"dish_name": form['dish_name']})
 			if recipe_in_db:
 				# Log user in (add to session)
-				print("recipe loaded")
 				flash("You have successfully added you recipe")
 				return redirect(url_for('add_recipe'))
 			else:
-				flash("You have successfully added you recipe")
+				flash("There was an issue loading the recipe")
 				return redirect(url_for('add_recipe'))
 	
 
