@@ -58,7 +58,8 @@ within the project.
 
 * Update page
     -   This page allows you add, update and delete any of the attributes of your recipe. The page is
-        is display with a form and a submit button
+        is displayed with a form and a submit button
+    -   THis form is also Dynamic and you can add extra lines for Ingredients, Allergens and Steps
 
 * Delete Button
     -   Activates a modal, which asks you to confirm if you would like to Delete the recipe. If you
@@ -67,6 +68,7 @@ within the project.
 
 * Add Recipe
     -   This page allows you to add a new recipe
+    -   The form is Dynamic and you can add extra lines for Ingredients, Allergens and Steps
 
 * Search Recipes
     - on this page you have three search options
@@ -87,27 +89,31 @@ within the project.
 * Logout
     - This page allows the user to logout and directs user back to the index page
 
-
-
 ### Features Left to Implement
-    - Would like to add autocomplete to the name search.
-    - Would like to add pagination.
+  - Would like to add autocomplete to the name search.
+  - Would like to add pagination.
+
+### Interesting Bugs
+  - Site will not display on Opera
+  - Select on the seach form (option 3) will not work correctly in Mobile devices
 
 ## Some the tech used includes:
 - Base languages used to create website
-- **Python**, **JavaScript**, **HTML**, **CSS**, **JINJA**
-  - [Cloud9] (https://aws.amazon.com/cloud9/)
+  -**Python**, **JavaScript**, **HTML**, **CSS**, **JINJA**
+- [Cloud9] (https://aws.amazon.com/cloud9/)
     - We use **Cloud9** to build our web pages
- -[Materialize] (https://materializecss.com/)
+- [Materialize] (https://materializecss.com/)
     - We use **Materialize** for a CSS Framework
 - [Flask] (http://flask.pocoo.org/)
-    - We use **Flask** for making web services in Python
-  - [Google-fonts] (https://fonts.google.com/m)
+    - We use **Flask** for making web services with Python
+- [Google-fonts] (https://fonts.google.com/m)
     - Using **Google-fonts** to get use of fonts
-  - [GitHub](https://github.com/)
+- [GitHub](https://github.com/)
     - Using **GitHub** a web-based hosting service for version control using Git
- - [Heroku](https://heroku.com/)
+- [Heroku](https://heroku.com/)
     - We use **Heroku** a web-based hosting service.
+- [MongoDB](https://mlab.com/welcome/)
+    - We use **MongoDB** as a datebase for storing users and recipes (I used two documents).
 
 
 
@@ -198,7 +204,7 @@ within the project.
 - Site viewed and tested in the following browsers (all work as expected):
   - Google Chrome displays okay
   - Mozilla Firefox    displays okay
-  - Opera               not displaying
+  - Opera   not displaying 
   - Internet explorer
 
 ### Automatic testing
@@ -246,7 +252,7 @@ within the project.
 
 
 # Deployment
-
+Set web up in Github
 This web site is deployed on the Heroku platform.
 https://recipe-book-jm.herokuapp.com/
 - Set up app in Herouk. Choose name and set  region to Europe
@@ -262,6 +268,12 @@ https://recipe-book-jm.herokuapp.com/
   - add requirments.txt
   - add Profile
   - git push -u heroku master
+  - 
+- Set up in GitHub and give name
+
+The in Heroku under deploy tab you can connect to GitHub using the name you set uo in gitHUb
+
+The database is stored using MLAb
 
 # Credits
 All recipes come from the BBC web site

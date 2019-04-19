@@ -47,18 +47,17 @@
       </button>
       </br>
     </form>
-    
   </div>
-  </div>
+</div>
   <!--  third search -->
   <div class="col s12 m3 offset-m1">
     <p class= "instruction">Please select type and origin, both are mandatory</p>
     </br>
     <form id="origintype_search_form" name="origintype_search_form" method="post">
-      <div class="form_style">
+    <!--  <div class="form_style"> -->
         <div class="input-field">
           <select id="filter_type" name="filter_type">
-            <option value="" selected>Choose your option</option>
+            <option value="" disabled selected>Choose your option</option>
             <option value="breakfast">Breakfast</option>
             <option value="lunch">Lunch</option>
             <option value="dinner">Dinner</option>
@@ -67,6 +66,7 @@
           </select>
               <label>Dish Type</label>
         </div>
+        
         </br>
         <div class="input-field" >
             <select id="country" name="country">
@@ -322,7 +322,7 @@
           <button id="buttonorgintype" class=" btn waves-effect waves-light" type="submit" >Submit 
                 <i class="material-icons right">send</i>
           </button>
-      </div>
+       </div> 
     </form>
   </div>
 </div>

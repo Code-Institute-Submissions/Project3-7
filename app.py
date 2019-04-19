@@ -8,8 +8,6 @@ from bson.json_util import dumps
 from flask_pymongo import PyMongo
 
 
-
-
 #const set with capital laters with underscore seperating the words
 #MONGO_URI was set from the command line with the export command
 #mongodb://Admin:B00kjm@ds331735.mlab.com:31735/recipe_book

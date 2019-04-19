@@ -2,7 +2,6 @@
 {% block content %}
 
 <div class="container">
-    
     <div class= "row">
         <div class="basic_detials col s12 m6">
             <h1 id="show_title">{{ recipe.dish_name }}</h1>
@@ -11,7 +10,7 @@
             <i class="fas fa-pizza-slice"></i> <strong>Type:</strong> {{ recipe.type }}</br>
             <i class="far fa-clock"></i> <strong>Prep Time: </strong> {{ recipe.prep_time }}</br>
             <i class="far fa-clock"></i> <strong>Cooking Time: </strong> {{ recipe.cook_time }}</br>
-            <i class=" tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
+            <i class="tiny material-icons">people</i> <strong>Services: </strong> {{ recipe.serves }} </br>
             Allergens: 
                 {% for recipe in recipe.allergens %}
                 <div class="pink lighten-3 chip">
@@ -21,6 +20,7 @@
             <div class="wrap">
                 <a id="likesButton" class="btn-floating btn-small waves-effect waves-light red pulse"><i class="material-icons">favorite_border</i></a>
                 <span class="votes">{{ recipe.likes }}</span> 
+                </br></br>
             </div>
          </div>
          <div class="col s12 m6 center-align">
@@ -48,14 +48,14 @@
     </div>
     {% if recipe.user_name  ==  session['user']  %}
     </br>
-    
+</div>    
     <div class="container">
         <div class= "row">
             <span class="col s5 offset-s1">
-                <a id="update_button" href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn red lighten-1 modal-trigger"><i class="material-icons left">update</i>Update</a>
+                <a id="update_button" href="{{url_for('edit_recipe', recipe_id=recipe._id)}}" class="waves-effect waves-light btn red lighten-1 modal-trigger">Update<i class="material-icons left">update</i></a>
             </span>
-            <span class= "col s4 offset-s2 " >
-                <a id="delete_button" href="#deleteModal" class="waves-effect waves-light btn red lighten-1  modal-trigger"><i class="material-icons left">delete</i>Delete</a>
+            <span class= "col s4 offset-s2">
+                <a id="delete_button" href="#deleteModal" class="waves-effect waves-light btn red lighten-1 modal-trigger">Delete<i class="material-icons left">delete</i></a>
             </span>
         </div>
     </div>
