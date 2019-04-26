@@ -21,7 +21,7 @@ app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config["DBS_NAME"] = "recipe_book"
-app.config["MONGO_URI"] = "mongodb://Admin:B00kjm@ds331735.mlab.com:31735/recipe_book"
+app.config["MONGO_URI"] = MONGODB_URI
 
 mongo = PyMongo(app)
 
