@@ -53,7 +53,7 @@
    {% endif %} 
    <!-- Flashed messages alerts modal -->
 
-<div id="alerts" class="container-fluid">
+<div id="alerts" class="center-align container-fluid">
   <div class="row justify-content-around">
     <div id="messages">
       {% with messages = get_flashed_messages() %} 
@@ -82,19 +82,17 @@
         M.AutoInit();
         
         $(document).ready(function(){
-        $('.sidenav').sidenav();
-        });
-        
-        $(document).ready(function(){
-        $('.tooltipped').tooltip();
-        });
-        
-         $(document).ready(function(){
-         $('.modal').modal();
-         });
-         
-         $(document).ready(function(){
-            $('select').formSelect();
+          $('.sidenav').sidenav();
+          $('.tooltipped').tooltip();
+          $('.modal').modal();
+          $('select').formSelect();
+          // for HTML5 "required" attribute
+          $("select[required]").css({
+              display: "inline",
+              height: 0,
+              padding: 0,
+              width: 0
+            });
           });
     </script>
 {% if session.user %}

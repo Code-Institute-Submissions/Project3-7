@@ -38,7 +38,7 @@ within the project.
     - Can only log in if registered. Index page allows you to do this. Once registered they will be redirected to the home page.
 
 * login 
-    - login in form. One logged in will direct to the login page.
+    - login in form. Once logged in will be directed to the home page.
 
 * Home link
     -  each user as their own home page with their own recipes order by the most likes
@@ -52,7 +52,7 @@ within the project.
 
 * Show recipe
     - Displays all the details on the cards on one HTML page
-    - If the use is also the Author of the recipe you will see two buttons one for updating the recipe and the second one allows you delete the recipe.
+    - If the user is also the Author of the recipe you will see two buttons one for updating the recipe and the second one allows you delete the recipe.
     - If you are not the Author of the recipe then you can click the like button. This will increase the
       count. Each person can only like each recipe once only.
 
@@ -75,7 +75,7 @@ within the project.
     - Search by name. If you know the name, then you can search and if found will display a card with 
       recipe below. The card functions like all cards on the site with the same options
     - Search by ingredients and or Allergen. For this search you must select at least two ingredients
-      with the option of selecting an allergen. Once submitted a list of all the recipes with both   ingredients and if allergen selected then it will remove any recipes from this list containing this allergen.
+      with the option of selecting an allergen. Once submitted a list of all the recipes with both ingredients and if allergen selected then it will remove any recipes from this list containing this allergen.
     - The third option allows you to search by type and origin. Both options must be selected and again results are shown as list of cards at the bottom of the page 
 * Dashboard
     - This page contains 6 graphs. All graphs are interactive. For example, if you click on an author’s bar, then all the other graphs will respond, and the information will change to show how that person’s recipes are split up. E.g. dish with most likes bar chart, you will only see the authors recipes and the rest will disappear.
@@ -91,11 +91,13 @@ within the project.
 
 ### Features Left to Implement
   - Would like to add autocomplete to the name search.
+  - Would like to change the seach page so that it looks better on mobile
   - Would like to add pagination.
 
 ### Interesting Bugs
-  - Site will not display on Opera
-  - Select on the seach form (option 3) will not work correctly in Mobile devices
+  - Site hero-image would display on Opera, fixed when added "-o-linear-gradient"
+  - Site hero-image would display on Internet Explorer. Add min-height in parent class to fix this.
+  
 
 ## Some the tech used includes:
 - Base languages used to create website
@@ -108,13 +110,12 @@ within the project.
     - We use **Flask** for making web services with Python
 - [Google-fonts] (https://fonts.google.com/m)
     - Using **Google-fonts** to get use of fonts
-- [GitHub](https://github.com/)
+- [GitHub] (https://github.com/)
     - Using **GitHub** a web-based hosting service for version control using Git
-- [Heroku](https://heroku.com/)
+- [Heroku] (https://heroku.com/)
     - We use **Heroku** a web-based hosting service.
-- [MongoDB](https://mlab.com/welcome/)
-    - We use **MongoDB** as a datebase for storing users and recipes (I used two documents).
-
+- [MongoDB] (https://mlab.com/welcome/)
+    - We use **MongoDB** as a datebase for storing users and recipes 
 
 
 ## Testing
@@ -135,7 +136,7 @@ within the project.
     - If everything okay user moved home page.
 
 - login form
-    - if Password or user name incorrect error message displayed
+    - if Password or user name incorrect, error message displayed
     - if user already in session error message display
     - If everything okay then page directed to home page
     - 
@@ -144,7 +145,7 @@ within the project.
     - Front of card display image, link to show recipe page and back displays all attributes correctly
 
 - Profile page
-      - All the user’s recipes are display here and order from most like down.
+      - All the user’s recipes are display here and order from most likes down.
       
 - Recipes page.
       - All recipes displayed here correctly in order from most liked down.
@@ -157,7 +158,7 @@ within the project.
     - Update and Delete button only show if it’s the Author viewing the recipe
 
 - delete Button
-    - modal pops us when pressed. click yes button on model and recipe deletes okay
+    - modal pops us when pressed. click yes button on model and recipe deletes okay amd messgae displayed okay.
     - Click no and returns to show recipe page
     
 - update button
@@ -165,12 +166,10 @@ within the project.
 
 - Update form test
     - Form page is displayed correctly
-    - All required fields work as expected cannot submit form without Name, image, prep time, cook time, servers.
-    - Type and country of origin no option to leave blank
+    - All required fields work as expected cannot submit form without Name, image, prep time, cook time, servers, Type and country of origin.
     - Can add, edit and delete Ingredients, Steps and allergens okay.
     - Buttons to add extra fields work okay
     - Submit button works as expected
-
 
 - Search page
 - Dish Name Search
@@ -179,15 +178,15 @@ within the project.
     - Ingredients and allergen Search
         - Two ingredient fields are required.
         - Can search with two ingredients and returns all recipes that have the two ingredients mentioned
-        - If allergen added, will check recipes to make that allergen is not included on the results
+        - If allergen added, will check recipes to make sure that allergen is not included on the results
         - if no recipes found that match the criteria then the message no recipes found is displayed
     - Dish type and Country of Origin Search
-        - If Country or origin not selected an alert message box pop up telling the user to fill them in
-        - If both options are selected it will return the matches else display message no recipes found is displayed
+        - If Country or origin not selected an erro message will pop up telling the user to fill them in
+        - If both options are selected it will return the matches, else display message no recipes found is displayed
         
 - add recipes
     - Form display as expected.
-    - All required fields work as expected, cannot submit form without Name, image, prep time, cook time, servers.
+    - All required fields work as expected, cannot submit form without Name, image, prep time, cook time, servers, type and country of origin.
     - type and country select, need to add validation in python to display error message.
     - need at least one Ingredient and one step to submit the recipe
     - can submit with no allergens.
@@ -204,8 +203,8 @@ within the project.
 - Site viewed and tested in the following browsers (all work as expected):
   - Google Chrome displays okay
   - Mozilla Firefox    displays okay
-  - Opera   not displaying 
-  - Internet explorer
+  - Opera   displays okay
+  - Internet explorer displays okay
 
 ### Automatic testing
 - Automatic testing not required
@@ -213,7 +212,7 @@ within the project.
 ### Site has been tested on mobile, tablet and laptop devices as well as testing on chrome for the different sizes.
 
 ### Index page
--Stays the same for all devices
+- Stays the same for all devices
 
 ### Navbar: 
 - On medium to large screens the nav-items are display on the right-hand side of the navbar. On Small screens these items are displayed under
@@ -271,7 +270,7 @@ https://recipe-book-jm.herokuapp.com/
   - 
 - Set up in GitHub and give name
 
-The in Heroku under deploy tab you can connect to GitHub using the name you set uo in gitHUb
+Then in Heroku under deploy tab you can connect to GitHub using the name you set uo in gitHUb
 
 The database is stored using MLAb
 

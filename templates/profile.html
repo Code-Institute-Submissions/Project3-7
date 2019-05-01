@@ -16,7 +16,9 @@
               </div>
               <div class="card-content">
                 <span class="card-title  grey-text text-darken-4">{{ recipe.dish_name }}</span>
-                <a href="{{url_for('show_recipe', recipe_id = recipe._id)}}">Cooking Instructions</a><i class="activator material-icons right tooltipped" data-position="bottom" data-tooltip="Details">add</i>
+                <div class="card-action">
+                  <a href="{{url_for('show_recipe', recipe_id = recipe._id)}}" class="blue-text text-darken-2">Cooking Instructions</a><i class="activator material-icons right tooltipped" data-position="bottom" data-tooltip="Details">add</i>
+                </div>
               </div>
               <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">{{ recipe.dish_name }}<i class="material-icons right">close</i></span>
@@ -39,7 +41,7 @@
             </div>
           </div>
     {% else %}
-      <h4>You have no recipes: </br> To add your own recipes go to 'Add recipe'. </br>  To see othere people recipes go to 'All recipes'</h4>
+      <h4>You have no recipes: </br> To add your own recipes go to 'Add recipe'. </br>  To see other people recipes go to 'All recipes'</h4>
     {% endfor %}
 </div>
 </div>

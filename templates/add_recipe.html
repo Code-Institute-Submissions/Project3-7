@@ -32,20 +32,22 @@
                 <label for="serves">Serves</label>
             </div>
             </br>
-            <div class="input-field">
-                <select id="type" name="type">
-                <option value="" disabled selected>Choose your option</option>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Lunch">Lunch</option>
-                <option value="Dinner">Dinner</option>
-                <option value="Desert">Desert</option>
-                <option value="starter">starter</option>
-              </select>
-                <label>Dish Type</label>
+            <div class="center-align">
+                <div class="input-field">
+                    <select id="type" name="type" class="validate" required>
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Desert">Desert</option>
+                    <option value="starter">starter</option>
+                  </select>
+                    <label>Dish Type</label>
+                </div>
             </div>
             </br>
             <div class="input-field">
-                <select id="country" name="country">
+                <select id="country" name="country" class="validate" required>
                 <option value="" disabled selected>Choose your option</option>
                 <option value="Afghanistan">Afghanistan</option>
                   <option value="Åland Islands">Åland Islands</option>
@@ -357,6 +359,7 @@
     <div class="section">
         <div class="container">
             <h5>Allergens</h5>
+            <p class="center-align allergens">Cereals containing gluten\Crustaceans\Eggs\Fish\Peanuts\Soybeans\Milk\Nuts\Celery\Mustard\Sesame Seeds\Molluscs</p>
         </div>
         <div class="row">
             <div class="allergenBox col s12 m8 offset-m2">

@@ -209,7 +209,7 @@ def update_recipe(recipe_id):
 			if form['step6'] !="":
 				steps.append({'step':form['step6'].lower()})
 		if "step7" in request.form:
-			if form['step8'] !="":
+			if form['step7'] !="":
 				steps.append({'step':form['step7'].lower()})
 		if "step8" in request.form:
 			if form['step8'] !="":

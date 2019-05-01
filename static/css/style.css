@@ -5,21 +5,42 @@ html, body {
 /* flex is to keep footer at the bottom */
 body {
     display: flex;
-    min-height: 100vh;
+    min-height: 100vh; 
     flex-direction: column;
     font-family: 'Roboto', sans-serif;
     text-transform: capitalize;
+   
   }
 
 main {
     flex: 1 0 auto;
   }
+  
 
 /*  change color on heading  */
 h3 {
     color: #ff6347;
 }
 /* -------------------index page  ---------/
+/*main image on background */
+.hero-image{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/images/food.jpg');
+    background-image: -o-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/images/food.jpg');
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/images/food.jpg');
+    background-image: -moz-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/images/food.jpg');
+    background-image: -ms-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/images/food.jpg'); 
+    overflow:auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size:  cover;
+    -ms-background-size: cover;
+    background-position: center;
+    min-height: 600px; /*added so would display on IE */
+    height: 100%;
+    position: relative; 
+}
 /*login button circle the corners */ 
 .login-btn{
     border-radius: 25px;
@@ -31,24 +52,21 @@ h3 {
     font-weight: 900;
 }
 
+#result_pass{
+    font-size: 24px;
+    color: red;
+}
+
+#alerts{
+    font-size: 24px;
+    color: red;
+}
 .social-links{
     font-size: 18px;
     margin: 10px;
 }
 
-/*main image on background */
-.hero-image{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/images/food.jpg');
-    overflow:auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-position: center;
-    height: 100%;
-    position: relative;
-}
+
 
 .form_style{
     margin: 0 auto;
@@ -68,8 +86,20 @@ h3 {
 }
 
 /* cards */
+.card-image{
+    height: 50%;
+    width: 100%;
+}
+
+
 .card-title{
     text-transform: capitalize;
+    height: 40%;
+    width: 100%;
+}
+
+.card-action{
+    font-size: 12px;
 }
 .back-card-jm{
      text-transform: capitalize;
@@ -79,6 +109,16 @@ h3 {
 /* message display after user submits search */
 .search_result{
     font-size: 24px;
+    color: #ff6347;
+}
+
+#result_message{
+    font-size: 24px;
+    color: #ff6347;
+}
+
+.allergens{
+    font-size: 16px;
     color: #ff6347;
 }
 
