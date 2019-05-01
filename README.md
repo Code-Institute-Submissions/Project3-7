@@ -37,11 +37,11 @@ within the project.
 * register
     - Can only log in if registered. Index page allows you to do this. Once registered they will be redirected to the home page.
 
-* login 
+* Login 
     - login in form. Once logged in will be directed to the home page.
 
 * Home link
-    -  each user as their own home page with their own recipes order by the most likes
+    -  Each user as their own home page with their own recipes order by the most likes
 
 * All recipes
     - This page provides all recipes from all users and again order by the most likes
@@ -135,13 +135,13 @@ within the project.
     - If User name already in Database then error message display
     - If everything okay user moved home page.
 
-- login form
+- Login form
     - if Password or user name incorrect, error message displayed
     - if user already in session error message display
     - If everything okay then page directed to home page
     - 
-- cards
-    - cards display correctly in-home page, all recipes page and search page
+- Cards
+    - Cards display correctly in-home page, all recipes page and search page
     - Front of card display image, link to show recipe page and back displays all attributes correctly
 
 - Profile page
@@ -150,19 +150,19 @@ within the project.
 - Recipes page.
       - All recipes displayed here correctly in order from most liked down.
 
-- show recipe
+- Show recipe
     - Recipe details display as expected
     - Likes button if clicked by Author of recipe, pop up error message appears
     - Likes button if clicked and user that already liked the recipe then popup message appears
     - Otherwise likes count is incremented by one.
     - Update and Delete button only show if it’s the Author viewing the recipe
 
-- delete Button
-    - modal pops us when pressed. click yes button on model and recipe deletes okay amd messgae displayed okay.
+- Delete Button
+    - Modal pops us when pressed. click yes button on model and recipe deletes okay amd messgae displayed okay.
     - Click no and returns to show recipe page
     
-- update button
-    - update form pops up with recipes details
+- Update button
+    - Update form pops up with recipes details
 
 - Update form test
     - Form page is displayed correctly
@@ -184,12 +184,12 @@ within the project.
         - If Country or origin not selected an erro message will pop up telling the user to fill them in
         - If both options are selected it will return the matches, else display message no recipes found is displayed
         
-- add recipes
+- Add recipes
     - Form display as expected.
     - All required fields work as expected, cannot submit form without Name, image, prep time, cook time, servers, type and country of origin.
-    - type and country select, need to add validation in python to display error message.
-    - need at least one Ingredient and one step to submit the recipe
-    - can submit with no allergens.
+    - Type and country select, need to add validation in python to display error message.
+    - Need at least one Ingredient and one step to submit the recipe
+    - Can submit with no allergens.
     - Cannot submit recipe with the same name as recipe in database
     - Submit button clears the form and displays a message that your recipe has been added successfully if everything was okay.
 
@@ -198,7 +198,7 @@ within the project.
       - This is an interactive chart so click on a bar or section of pie chart, then all charts will represent only the portion of the chart you clicked. Click a second time then it reverts to show the complete set of data. Test all charts and work okay
 
 - Logout
-      - works okay, logs user out and redirects to index page.
+      - Works okay, logs user out and redirects to index page.
     
 - Site viewed and tested in the following browsers (all work as expected):
   - Google Chrome displays okay
